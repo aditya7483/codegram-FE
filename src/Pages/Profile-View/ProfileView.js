@@ -48,91 +48,93 @@ const ProfileView = () => {
 
   return (
     <>
-      <div className="user-profile-banner">
-       
+      <div className="user-profile-banner" >
         <div className="user-profile-container">
-          <div className="user-profile-pic"></div>
+       
+          <div className="user-profile-pic">
+          </div>
+          
           <div className="view-username">
             <h4>Username#1234</h4>
             <h4>location</h4>
           </div>
         </div>
-      </div>
+        </div>
       {/* <div className="container"> */}
-      <div className="user-container">
-      <div className="user">
-        {/* <div className='user-container'> */}
-        {/* <div className="user-details"> */}
+      <div className="user-container" style={{justifyContent:"center"}}>
+        <div className="user">
+          {/* <div className='user-container'> */}
+          {/* <div className="user-details"> */}
 
-        {/* <div className='edit-profile-button'>
+          {/* <div className='edit-profile-button'>
         <button> Edit Profile</button>
         </div> */}
-        {/* <div className="details">
+          {/* <div className="details">
               <h3>university</h3>
               <h3>URL</h3>
               <h3>Skills</h3>
             </div> */}
-        <Card sx={{ minWidth: 275 }}>
-          <CardContent>
-            <Typography
-              sx={{ fontSize: 14 }}
-              color="text.secondary"
-              gutterBottom
-            >
-              Word of the Day
-            </Typography>
-            <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              adjective
-            </Typography>
-            <Typography variant="body2">
-              well meaning and kindly.
-              <br />
-              {'"a benevolent smile"'}
-            </Typography>
-          </CardContent>
-        </Card>
-        <Box sx={{ width: "100%" }}>
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              aria-label="basic tabs example"
-            >
-              <Tab label="Overview" {...a11yProps(0)} />
-              <Tab label="Social" {...a11yProps(1)} />
-              <Tab label="Activity" {...a11yProps(2)} />
-            </Tabs>
+          <Card sx={{ minWidth: 275, square: true }}>
+            <CardContent>
+              <Typography
+                sx={{ fontSize: 14 }}
+                color="text.secondary"
+                gutterBottom
+              >
+                About Me
+              </Typography>
+              <Typography sx={{ mb: 1.5 }} color="text.secondary">
+                -----
+              </Typography>
+              <Typography variant="body2">
+                -----.
+                <br />
+                {'"------"'}
+              </Typography>
+            </CardContent>
+          </Card>
+          <Box sx={{ width: "100%" }}>
+            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                aria-label="basic tabs example"
+              >
+                <Tab label="Overview" {...a11yProps(0)} />
+                <Tab label="Social" {...a11yProps(1)} />
+                <Tab label="Activity" {...a11yProps(2)} />
+              </Tabs>
+            </Box>
+            <TabPanel value={value} index={0}>
+              Overview
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+              Social
+            </TabPanel>
+            <TabPanel value={value} index={2}>
+              Activity
+            </TabPanel>
           </Box>
-          <TabPanel value={value} index={0}>
-            Overview
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-            Social
-          </TabPanel>
-          <TabPanel value={value} index={2}>
-            Activity
-          </TabPanel>
-        </Box>
-        {/* </div> */}
-        {/* </div> */}
-        {/* </div> */}
-      </div>
-      <Card sx={{ minWidth: 175 , m: 2}}  >
+          {/* </div> */}
+          {/* </div> */}
+          {/* </div> */}
+        </div>
+        <Card sx={{ minWidth: 175, m: 2, square: true }} >
           <CardContent>
             <Typography
               sx={{ fontSize: 14 }}
               color="text.secondary"
               gutterBottom
             >
-              Word of the Day
+              Skills/contributors/users
             </Typography>
             <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              adjective
+              ----------
             </Typography>
             <Typography variant="body2">
-              well meaning and kindly.
+              ----------
               <br />
-              {'"a benevolent smile"'}
+              {'"------------"'}
             </Typography>
           </CardContent>
         </Card>

@@ -31,10 +31,11 @@
     border-radius: 20px;
 }
 .user-profile-banner{
-    border: 1px solid grey;
+    position: relative;
     height: 245px;
     width: 1519px;
     cursor: pointer;
+    /* background-color: #00008B; */
     background: url('../../Assets/84f5533218ae3fbc050349d5d1937d13.jpg')no-repeat center center/cover;
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);;
 }
