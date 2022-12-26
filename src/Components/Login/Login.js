@@ -69,8 +69,8 @@ const Login = () => {
               <div className="modal-footer justify-content-center flex-column">
                 <div className="d-grid gap-2 col-6 mx-auto">
                   {
-                    login ? <button type="submit" className="btn btn-primary" onClick={handleLogin}>Login</button> :
-                      <button type="submit" className="btn btn-primary" onClick={handleSignup}>Signup</button>
+                    login ? <button type="submit" className="btn_prim" onClick={handleLogin}>Login</button> :
+                      <button type="submit" className="btn_prim" onClick={handleSignup}>Signup</button>
                   }
                 </div>
                 <p className='text-center mt-3'>

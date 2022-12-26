@@ -6,6 +6,7 @@ import {
 import './App.css';
 import Landing from "./Pages/Landing/Landing";
 import Navbar from "./Components/Navbar/Navbar";
+import './root.css'
 
 function App() {
   return (

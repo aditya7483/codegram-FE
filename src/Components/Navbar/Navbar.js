@@ -22,8 +22,15 @@ const Navbar = (props) => {
               <li className="nav-item mynav-txt mx-3">
                 <a className="nav-link active" aria-current="page" href="/">Home</a>
               </li>
-              <li className="nav-item mynav-txt mx-3">
-                <a className="nav-link" href="#about">About</a>
+              <li className="nav-item dropdown">
+                <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Projects
+                </a>
+                <ul className={`dropdown-menu ${styles.dropdown}`}>
+                  <li><a className="dropdown-item" href="#">New Project</a></li>
+                  <li><a className="dropdown-item" href="#">My Projects</a></li>
+                  <li><a className="dropdown-item" href="#">Gloal Projects</a></li>
+                </ul>
               </li>
               <li className="nav-item mynav-txt mx-3">
                 <a className="nav-link" href="#contact">Contact Us</a>

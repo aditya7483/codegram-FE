@@ -31,8 +31,8 @@
 
 .line1 {
   height: 4rem;
-  border: 1px solid #dbd2d2;
-  background-color: #8400fd;
+  border: 1px solid white;
+  background-color: var(--color-primary);
 }
 
 .carousel_div {
