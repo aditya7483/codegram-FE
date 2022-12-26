@@ -1,3 +1,4 @@
+
 import {
   BrowserRouter,
   Routes,
@@ -8,8 +9,10 @@ import Landing from "./Pages/Landing/Landing";
 import Navbar from "./Components/Navbar/Navbar";
 import './root.css'
 
-function App() {
+
+const App = () => {
   return (
+
     <BrowserRouter>
       <Navbar />
       <Routes>
@@ -17,6 +20,7 @@ function App() {
       </Routes>
     </BrowserRouter>
   );
+
 }
 
-export default App;
+export default App

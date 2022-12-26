@@ -1,3 +1,4 @@
+
 .btn_prim {
   border: 1px solid var(--color-primary);
   background-color: white;
@@ -10,3 +11,4 @@
   color: white;
   background-color: var(--color-primary);
 }
+
