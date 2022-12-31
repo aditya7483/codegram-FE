@@ -19,12 +19,14 @@ const App = () => {
       <Navbar />
       <Routes>
         <Route path="/" element={<Landing />} />
+
         <Route path="/profile" element={<ProfileView />} />
         <Route path="/profileSetting" element={<ProfileSetting />} />
         <Route path="/project">
           <Route path="" element={<Landing />} />
           <Route path="new" element={<NewProject />} />
         </Route>
+
 
       </Routes>
     </BrowserRouter>
