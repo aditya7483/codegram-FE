@@ -1,14 +1,12 @@
-
 .btn_prim {
   border: 1px solid var(--color-primary);
   background-color: white;
-  color: var(--color-primary);
+  color: var(--color-primary-light);
   border-radius: 5px;
   transition: background-color 0.15s;
 }
 
 .btn_prim:hover {
   color: white;
-  background-color: var(--color-primary);
+  background-color: var(--color-primary-light);
 }
-
