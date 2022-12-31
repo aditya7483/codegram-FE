@@ -1,0 +1,13 @@
+.nav_div {
+  padding: 1rem 0;
+  box-shadow: #666e6e 0px 0px 4px 0px;
+}
+
+.logo {
+  font-size: 20px;
+  color: #740dfb;
+}
+
+.btn_prim {
+  padding: 6px 20px;
+}

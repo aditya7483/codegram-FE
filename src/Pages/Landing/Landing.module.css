@@ -1,0 +1,49 @@
+.main_div {
+}
+
+.header_div {
+  max-width: 39rem;
+}
+
+.btn_prim {
+  padding: 7px 20px;
+}
+
+.heading_primary {
+}
+.para_primary {
+  color: #6e6d6d;
+}
+
+.lines {
+  position: relative;
+  width: 100%;
+}
+
+.lines_left {
+  left: -5rem;
+  transform: rotate(208deg);
+}
+.lines_right {
+  transform: rotate(-208deg);
+  left: 5rem;
+}
+
+.line1 {
+  height: 4rem;
+  border: 1px solid white;
+  background-color: var(--color-primary);
+}
+
+.carousel_div {
+  border: 3px solid #666666;
+  box-shadow: 3px 7px 10px 0px grey;
+  height: 23rem;
+  border-radius: 1rem;
+  width: 45%;
+  background: white;
+  margin: auto;
+  z-index: 100;
+  position: relative;
+  top: -5rem;
+}
