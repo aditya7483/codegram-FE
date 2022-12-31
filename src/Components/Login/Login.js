@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import styles from './Login.module.css'
 
 const Login = () => {
 
@@ -69,21 +70,21 @@ const Login = () => {
               <div className="modal-footer justify-content-center flex-column">
                 <div className="d-grid gap-2 col-6 mx-auto">
                   {
-                    login ? <button type="submit" className="btn_prim" onClick={handleLogin}>Login</button> :
-                      <button type="submit" className="btn_prim" onClick={handleSignup}>Signup</button>
+                    login ? <button type="submit" className={`btn_prim ${styles.primary_btn}`} onClick={handleLogin}>Login</button> :
+                      <button type="submit" className={`btn_prim ${styles.primary_btn}`} onClick={handleSignup}>Signup</button>
                   }
                 </div>
                 <p className='text-center mt-3'>
                   {
                     login ?
                       <>
-                        Dont have an account? <button className='border-0 text-primary' onClick={() => {
+                        Dont have an account? <button className='border-0 ' onClick={() => {
                           setLogin(false);
                           handleFieldChange();
                         }}>Signup</button>
                       </> :
                       <>
-                        Already have an account? <button className='border-0 text-primary' onClick={() => {
+                        Already have an account? <button className='border-0 ' onClick={() => {
                           setLogin(true);
                           handleFieldChange();
                         }}>Login</button>
