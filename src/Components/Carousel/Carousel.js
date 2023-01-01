@@ -8,10 +8,18 @@ const Carousel = (props) => {
   const [current, setCurrent] = useState({});
   const [count, setCount] = useState(0);
   const carouselRef = useRef()
+  let timeoutFunc = null
+
+  timeoutFunc = setTimeout(() => {
+    setCount((count + 1) % props.elements?.length)
+  }, 4000);
 
   useEffect(() => {
     setCurrent(props.elements[count])
+
+    return () => clearTimeout(timeoutFunc)
   }, [count]);
+
 
   useLayoutEffect(() => {
     let ctx = gsap.context(() => {
@@ -31,13 +39,16 @@ const Carousel = (props) => {
     return () => ctx.revert();
   }, [count]);
 
-  setTimeout(() => {
-    setCount((count + 1) % props.elements?.length)
-  }, 4000);
+
 
   return (
     <div className={`${styles.carousel_container} d-flex flex-column align-items-center position-relative`} ref={carouselRef}>
-      {/* <div className={`${styles.arrow_div} ${styles.arrow_left}`} onClick={() => { setCount((count + 1) % props.elements?.length) }}>
+      {/* <div
+        className={`${styles.arrow_div} ${styles.arrow_left}`}
+        onClick={() => {
+          setCount((count + 1) % props.elements?.length)
+        }}
+      >
         <ArrowBackIosIcon sx={{ color: 'white' }} />
       </div>
       <div className={`${styles.arrow_div} ${styles.arrow_right}`} onClick={() => { setCount(count !== 0 ? ((count - 1) % props.elements?.length) : (props.elements.length - 1)) }}>

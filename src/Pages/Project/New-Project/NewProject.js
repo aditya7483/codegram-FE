@@ -37,7 +37,7 @@ const NewProject = () => {
           options={inputData.skills.data}
           renderInput={(params) => <TextField {...params} variant="standard" label="Project Requirements" />}
         />
-        <button type="submit" onClick={handleSubmit} className={`${styles.submit_btn} btn_prim my-3`}>Create</button>
+        <button type="submit" onClick={handleSubmit} className={`${styles.submit_btn} align-self-center btn_prim my-3`}>Create</button>
       </form>
     </div>
   )
