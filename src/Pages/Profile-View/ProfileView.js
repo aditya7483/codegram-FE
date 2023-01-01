@@ -7,8 +7,8 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-// import banner from "../../Assets/84f5533218ae3fbc050349d5d1937d13.jpg";
 import profile from "../../Assets/identicon.png";
+import { useNavigate } from "react-router-dom";
 const AntTabs = styled(Tabs)({
   borderBottom: "1px solid #e8e8e8",
   "& .MuiTabs-indicator": {
@@ -53,84 +53,93 @@ const AntTab = styled((props) => <Tab disableRipple {...props} />)(
 );
 const ProfileView = () => {
   const [value, setValue] = React.useState(0);
-
+  const navigate = useNavigate();
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
+  const handleSetting = () => {
+    navigate("/ProfileSetting");
+  };
   return (
     <>
-      {/* <div
-        className={styles.user_profile_banner}
-        style={{
-          backgroundImage: `url(${banner})`,
-          backgroundRepeat: "no-repeat",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      ></div> */}
       <div className={styles.user_page}>
-        <div className={styles.user_profile_container}>
-          <div
-            className={styles.user_profile_pic}
-            style={{
-              backgroundImage: `url(${profile})`,
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover",
-            }}
-          ></div>
-
-          <div className={styles.view_userinfo}>
-            <h5>Username#1234</h5>
-          </div>
-          <button type="button" className="btn btn-outline-primary" style={{width:"100%"}}>Set Profile</button>
-        </div>
+            <Box className={styles.user_profile_container}>
+              <Box
+                className={styles.user_profile_pic}
+                style={{
+                  backgroundImage: `url(${profile})`,
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "cover",
+                }}
+              ></Box>
+              <Box className={styles.view_userinfo}>
+                <Typography sx={{ fontSize: 14 }} color="#8400fd" gutterBottom>
+                  Username#1234
+                </Typography>
+              </Box>
+              <Box>
+                <button
+                  type="button"
+                  className={`${styles.submit_btn} btn_prim my-3`}
+                  onClick={handleSetting}
+                >
+                  Set Profile
+                </button>
+              </Box>
+            </Box>
         <div className={` ${styles.user_container}`}>
           <div className={styles.user_data}>
-            <Card sx={{ minWidth: 100, square: true }}>
+            <Card sx={{ minWidth:300, m: 2, height: 80, square: true }}>
               <CardContent>
                 <Typography sx={{ fontSize: 14 }} color="#8400fd" gutterBottom>
                   About Me
                 </Typography>
               </CardContent>
             </Card>
-            <Card sx={{ Width: 100, mt: 2, square: true, height: 80 }}>
-            <CardContent>
-              <Typography sx={{ fontSize: 14 }} color="#8400fd" gutterBottom>
-                Skills
-              </Typography>
-              <Typography sx={{ mb: 1.5 }} color="text.secondary"></Typography>
-              <Typography variant="body2">
-                <br />
-              </Typography>
-            </CardContent>
-          </Card>
-          
-          <Card sx={{ Width: 100, mt:2, square: true, height: 100 }}>
-            <CardContent>
-              <Typography sx={{ fontSize: 14 }} color="#8400fd" gutterBottom>
-                Teams
-              </Typography>
-              <Typography sx={{ mb: 1.5 }} color="text.secondary"></Typography>
-              <Typography variant="body2">
-                <br />
-              </Typography>
-            </CardContent>
-          </Card>
-      
-            <Box sx={{ bgcolor: "#fff", mt: "1rem" }}>
-              <AntTabs
-                value={value}
-                onChange={handleChange}
-                aria-label="ant example"
-              >
-                <AntTab label="Overview" />
-                <AntTab value="Activity" label="Activity" />
-                <AntTab value="Social" label="Social" />
-              </AntTabs>
-              <Box sx={{ p: 3 }} />
-            </Box>
+            <Card sx={{ minWidth:300, m: 2, square: true, height: 80 }}>
+              <CardContent>
+                <Typography sx={{ fontSize: 14 }} color="#8400fd" gutterBottom>
+                  Skills
+                </Typography>
+                <Typography
+                  sx={{ mb: 1.5 }}
+                  color="text.secondary"
+                >
+                 
+                </Typography>
+                <Typography variant="body2">
+                  <br />
+                </Typography>
+              </CardContent>
+            </Card>
+
+            <Card sx={{ minWidth: 300, square: true, m: 2, height: 80 }}>
+              <CardContent>
+                <Typography sx={{ fontSize: 14 }} color="#8400fd" gutterBottom>
+                  Teams
+                </Typography>
+                <Typography
+                  sx={{ mb: 1.5 }}
+                  color="text.secondary"
+                ></Typography>
+                <Typography variant="body2">
+                  <br />
+                </Typography>
+              </CardContent>
+            </Card>
           </div>
+          <Box sx={{ bgcolor: "#fff", mt: "1rem" }}>
+            <AntTabs
+              value={value}
+              onChange={handleChange}
+              aria-label="ant example"
+            >
+              <AntTab label="Overview" />
+              <AntTab value="Activity" label="Activity" />
+              <AntTab value="Social" label="Social" />
+            </AntTabs>
+            <Box sx={{ p: 3 }} />
+          </Box>
         </div>
       </div>
     </>
