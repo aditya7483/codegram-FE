@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import styles from './Login.module.css'
 
 const Login = () => {
 
@@ -53,37 +54,37 @@ const Login = () => {
                 {
                   !login && <div className="mb-3">
                     <label htmlFor="loginEmail" className="form-label">Email</label>
-                    <input type="email" value={fields.email} className="form-control" id="loginEmail" placeholder="Enter Your Email" required onChange={handleFieldChange} />
+                    <input type="email" value={fields.email} name="email" className="form-control" id="loginEmail" placeholder="Enter Your Email" required onChange={handleFieldChange} />
                   </div>
                 }
                 <div className="mb-3">
                   <label htmlFor="loginUsername" className="form-label">Username</label>
-                  <input type="text" className="form-control" id="loginUsername" placeholder="Enter Your Username" value={fields.username} required minLength={'4'} onChange={handleFieldChange} />
+                  <input type="text" name="username" className="form-control" id="loginUsername" placeholder="Enter Your Username" value={fields.username} required minLength={'4'} onChange={handleFieldChange} />
                 </div>
                 <div className="mb-3">
                   <label htmlFor="loginPass" className="form-label">Password</label>
-                  <input type="password" className="form-control" id="loginPass" placeholder="Enter Your Password" value={fields.password} required minLength={'5'} onChange={handleFieldChange} />
+                  <input type="password" name="password" className="form-control" id="loginPass" placeholder="Enter Your Password" value={fields.password} required minLength={'5'} onChange={handleFieldChange} />
                 </div>
 
               </div>
               <div className="modal-footer justify-content-center flex-column">
                 <div className="d-grid gap-2 col-6 mx-auto">
                   {
-                    login ? <button type="submit" className="btn_prim" onClick={handleLogin}>Login</button> :
-                      <button type="submit" className="btn_prim" onClick={handleSignup}>Signup</button>
+                    login ? <button type="submit" className={`btn_prim ${styles.primary_btn}`} onClick={handleLogin}>Login</button> :
+                      <button type="submit" className={`btn_prim ${styles.primary_btn}`} onClick={handleSignup}>Signup</button>
                   }
                 </div>
                 <p className='text-center mt-3'>
                   {
                     login ?
                       <>
-                        Dont have an account? <button className='border-0 text-primary' onClick={() => {
+                        Dont have an account? <button className={`border-0 ${styles.change_btn}`} onClick={() => {
                           setLogin(false);
                           handleFieldChange();
                         }}>Signup</button>
                       </> :
                       <>
-                        Already have an account? <button className='border-0 text-primary' onClick={() => {
+                        Already have an account? <button className={`border-0 ${styles.change_btn}`} onClick={() => {
                           setLogin(true);
                           handleFieldChange();
                         }}>Login</button>

@@ -1,0 +1,30 @@
+{
+  "projectDomains":{
+    "data":["Web Development","Desktop App Development","Mobile App Development","AI/ML","Game Development","Sofware Development","Others"]
+  },
+  "skills":{
+    "data":[
+      "Python",
+      "Java",
+      "C#",
+      "C++",
+      "Swift",
+      "JavaScript",
+      "Ruby",
+      "PHP",
+      "Go",
+      "Kotlin",
+      "C",
+      "C++",
+      "Objective-C",
+      "Swift",
+      "Pascal",
+      "Ruby on Rails",
+      "ASP.NET",
+      "R",
+      "ASP.NET",
+      "MATLAB",
+      "Tensor Flow"
+  ]
+  }
+}
