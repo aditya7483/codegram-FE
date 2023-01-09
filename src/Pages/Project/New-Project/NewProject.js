@@ -5,13 +5,17 @@ import Autocomplete from '@mui/material/Autocomplete';
 import inputData from '../../../Common-Resources/inputData.json'
 
 const NewProject = () => {
-
-  const [fields, setFields] = useState({
-    name: '',
-    type: '',
-    requirements: []
-  });
-
+  const [projectValues, setProjectValues] = useState([
+  ]);
+  const [skillsValues, setSkillsValues] = useState([
+  ]);
+  const onChangeSkills = (event, value) => {
+    setSkillsValues(value);
+    
+  };
+  const onChangeProject = (event, value) => {
+    setProjectValues(value);
+  };
   const handleSubmit = (e) => {
     e.preventDefault()
   }
@@ -27,6 +31,9 @@ const NewProject = () => {
           id="combo-box-1"
           className='my-4'
           options={inputData.projectDomains.data}
+          multiple
+          value={projectValues}
+          onChange={onChangeProject}
           renderInput={(params) => <TextField {...params} variant="standard" label="Project Type" />}
         />
         <Autocomplete
@@ -35,6 +42,9 @@ const NewProject = () => {
           id="combo-box-2"
           className='my-4'
           options={inputData.skills.data}
+          multiple
+          value={skillsValues}
+          onChange={onChangeSkills}
           renderInput={(params) => <TextField {...params} variant="standard" label="Project Requirements" />}
         />
         <button type="submit" onClick={handleSubmit} className={`${styles.submit_btn} btn_prim my-3`}>Create</button>

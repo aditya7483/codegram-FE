@@ -24,7 +24,7 @@
   align-items: center;
 }
 .user_profile_pic {
-  border-radius: 4rem;
+  border-radius: 6rem;
   height: 12.5rem;
   width: 12.5rem;
   font-size: 20px;
@@ -43,7 +43,6 @@
   justify-content: center;
   align-items: center;
   height: 4rem;
-  margin-left: 10px;
   cursor: pointer;
   flex-direction: column;
 }

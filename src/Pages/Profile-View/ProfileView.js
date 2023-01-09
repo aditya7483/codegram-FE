@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import profile from "../../Assets/identicon.png";
+// import profile from "../../Assets/identicon.png";
 import { useNavigate } from "react-router-dom";
 const AntTabs = styled(Tabs)({
   borderBottom: "1px solid #e8e8e8",
@@ -51,7 +51,7 @@ const AntTab = styled((props) => <Tab disableRipple {...props} />)(
     },
   })
 );
-const ProfileView = () => {
+const ProfileView = (props) => {
   const [value, setValue] = React.useState(0);
   const navigate = useNavigate();
   const handleChange = (event, newValue) => {
@@ -67,7 +67,7 @@ const ProfileView = () => {
               <Box
                 className={styles.user_profile_pic}
                 style={{
-                  backgroundImage: `url(${profile})`,
+                  backgroundImage: `url("https://avatars.dicebear.com/api/initials/username.svg")`,
                   backgroundRepeat: "no-repeat",
                   backgroundSize: "cover",
                 }}
