@@ -63,40 +63,40 @@ const ProfileView = (props) => {
   return (
     <>
       <div className={styles.user_page}>
-            <Box className={styles.user_profile_container}>
-              <Box
-                className={styles.user_profile_pic}
-                style={{
-                  backgroundImage: `url("https://avatars.dicebear.com/api/initials/username.svg")`,
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: "cover",
-                }}
-              ></Box>
-              <Box className={styles.view_userinfo}>
-                <Typography sx={{ fontSize: 14 }} color="#8400fd" gutterBottom>
-                  Username#1234
-                </Typography>
-              </Box>
-              <Box>
-                <button
-                  type="button"
-                  className={`${styles.submit_btn} btn_prim my-3`}
-                  onClick={handleSetting}
-                >
-                  Set Profile
-                </button>
-              </Box>
-            </Box>
+        <Box className={styles.user_profile_container}>
+          <Box
+            className={styles.user_profile_pic}
+            style={{
+              backgroundImage: `url("https://avatars.dicebear.com/api/initials/.svg")`,
+              backgroundRepeat: "no-repeat",
+              backgroundSize: "cover",
+            }}
+          ></Box>
+          <Box className={styles.view_userinfo}>
+            <Typography sx={{ fontSize: 14 }} color="#8400fd" gutterBottom>
+              Username#1234
+            </Typography>
+          </Box>
+          <Box>
+            <button
+              type="button"
+              className={`${styles.submit_btn} btn_prim my-3`}
+              onClick={handleSetting}
+            >
+              Set Profile
+            </button>
+          </Box>
+        </Box>
         <div className={` ${styles.user_container}`}>
           <div className={styles.user_data}>
-            <Card sx={{ minWidth:300, m: 2, height: 80, square: true }}>
+            <Card sx={{ minWidth: 300, m: 2, height: 80, square: true }}>
               <CardContent>
                 <Typography sx={{ fontSize: 14 }} color="#8400fd" gutterBottom>
                   About Me
                 </Typography>
               </CardContent>
             </Card>
-            <Card sx={{ minWidth:300, m: 2, square: true, height: 80 }}>
+            <Card sx={{ minWidth: 300, m: 2, square: true, height: 80 }}>
               <CardContent>
                 <Typography sx={{ fontSize: 14 }} color="#8400fd" gutterBottom>
                   Skills
@@ -104,9 +104,7 @@ const ProfileView = (props) => {
                 <Typography
                   sx={{ mb: 1.5 }}
                   color="text.secondary"
-                >
-                 
-                </Typography>
+                ></Typography>
                 <Typography variant="body2">
                   <br />
                 </Typography>
