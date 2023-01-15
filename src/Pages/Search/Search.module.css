@@ -1,3 +1,14 @@
-input{
-    width: 60px;
+.formc{
+    display: inline;
+    width: 60%;
+    margin-right: 6px;
+}
+.main_div{
+     display: flex;
+     align-items: center;
+     justify-content: center;
+}
+.sub_div{
+    align-items: center;
+     justify-content: center;
 }

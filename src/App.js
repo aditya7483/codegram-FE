@@ -7,7 +7,7 @@ import ProfileSetting from "./Pages/Profile-View/ProfileSetting";
 import Search from "./Pages/Search/Search";
 import "./root.css";
 import NewProject from "./Pages/Project/New-Project/NewProject";
-
+import Filter from './Components/Filter/Filter'
 
 const App = () => {
   return (
@@ -17,6 +17,7 @@ const App = () => {
         <Route path="/" element={<Landing />} />
         <Route path="/profile" element={<ProfileView />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/Filter" element={<Filter />} />
         <Route path="/profileSetting" element={<ProfileSetting />} />
         <Route path="/project">
           <Route path="" element={<Landing />} />
