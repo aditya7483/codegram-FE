@@ -78,13 +78,17 @@ const Login = () => {
                   {
                     login ?
                       <>
+
                         Dont have an account? <button className={`border-0 ${styles.change_btn}`} onClick={() => {
+
                           setLogin(false);
                           handleFieldChange();
                         }}>Signup</button>
                       </> :
                       <>
+
                         Already have an account? <button className={`border-0 ${styles.change_btn}`} onClick={() => {
+
                           setLogin(true);
                           handleFieldChange();
                         }}>Login</button>

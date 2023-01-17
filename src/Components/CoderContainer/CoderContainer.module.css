@@ -1,0 +1,8 @@
+.user_profile_pic {
+    height: 8.3rem;
+    width: 8rem;
+    border-radius: 75px;
+    margin-right: 70px;
+    margin-left:20px;
+    cursor: pointer;
+  }

@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useRef, useLayoutEffect } from 'react'
 import styles from './Carousel.module.css'
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import gsap from 'gsap'
-
+// import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import gsap from 'gsap';
 const Carousel = (props) => {
 
   const [current, setCurrent] = useState({});
@@ -21,11 +20,13 @@ const Carousel = (props) => {
   }, [count]);
 
 
+
   useLayoutEffect(() => {
     let ctx = gsap.context(() => {
+
       // use scoped selectors
       gsap.from(".heading_anim", { y: 35, opacity: 0.4 })
-      gsap.from(".para_anim", { y: 35, opacity: 0.4 })
+     gsap.from(".para_anim", { y: 35, opacity: 0.4 })
 
 
       gsap.to(".heading_anim", { y: 0, duration: 0.8, delay: 0.7, opacity: 1 })

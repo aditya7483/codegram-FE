@@ -1,0 +1,16 @@
+
+.submit_btn {
+    padding: 8px 10px;
+    height: 40px;
+    width: 230px;
+  }
+  .user_profile_pic {
+    border-radius: 6rem;
+    height: 12.5rem;
+    width: 12.5rem;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .main_div{}
+  .sub_div{}
+  .form_div{}
