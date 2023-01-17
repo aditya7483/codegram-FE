@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
 import ProjectContainer from "../../Components/ProjectContainer/ProjectContainer";
 import CoderContainer from "../../Components/CoderContainer/CoderContainer";
 import Filter from "../../Components/Filter/Filter";
@@ -22,8 +21,8 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+        <Box component={'div'} sx={{ p: 3 }}>
+          <Box>{children}</Box>
         </Box>
       )}
     </div>
@@ -74,7 +73,7 @@ function Search() {
           <Filter selected={selected} />
         </form>
       </div>
-      <div className={`${styles.sub_div} container d-flex flex-column flex-fill mt-3 `}>
+      <Box className={`${styles.sub_div} container d-flex flex-column flex-fill mt-3 `}>
         <Box sx={{ width: "58%",marginRight:"70px" }}>
           <Box sx={{ borderBottom: 1, borderColor: "divider"}}>
             <Tabs
@@ -86,16 +85,16 @@ function Search() {
               <Tab sx={{ width: "425px" }} label="Coders" {...a11yProps(1)} />
             </Tabs>
           </Box>
-          <TabPanel value={value} index={0}>
+          <TabPanel  value={value} index={0}>
             {/* <!-- List of Project --> */}
-            {<ProjectContainer />}
+            <ProjectContainer title={"ProjectTitle"} desc={"Project based on react.js"}  skills={"C++"}/>
           </TabPanel>
-          <TabPanel value={value} index={1}>
+          <TabPanel  value={value} index={1}>
             {/* <!-- List of Coders --> */}
-            <CoderContainer />
+            <CoderContainer user={"username"} desc={"Project based on react.js"}  skills={"C++"}/>
           </TabPanel>
         </Box>
-      </div>
+      </Box>
     </>
   );
 }

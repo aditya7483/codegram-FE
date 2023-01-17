@@ -103,17 +103,7 @@ function ProfileSetting() {
                 Update profile
               </button>
             </form>
-            <div className={` d-flex mx-5  justify-content flex-column`}>
-              <h6>Profile picture</h6>
-              <div
-                className={`${styles.user_profile_pic}`}
-                style={{
-                  backgroundImage: `url("https://avatars.dicebear.com/api/initials/${fields.name}.svg")`,
-                  backgroundRepeat: "no-repeat",
-                  backgroundSize: "cover",
-                }}
-              ></div>
-            </div>
+          
           </div>
         </div>
       </div>

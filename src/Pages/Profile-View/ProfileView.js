@@ -1,56 +1,45 @@
 import React from "react";
 import styles from "./ProfileView.module.css";
-import { styled } from "@mui/material/styles";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-// import profile from "../../Assets/identicon.png";
+import PropTypes from 'prop-types';
+import ProjectContainer from "../../Components/ProjectContainer/ProjectContainer";
+import Request from "../../Components/Request/Request";
 import { useNavigate } from "react-router-dom";
-const AntTabs = styled(Tabs)({
-  borderBottom: "1px solid #e8e8e8",
-  "& .MuiTabs-indicator": {
-    backgroundColor: " #8400fd",
-  },
-});
+import Chip from "@mui/material/Chip";
+import Stack from "@mui/material/Stack";
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
 
-const AntTab = styled((props) => <Tab disableRipple {...props} />)(
-  ({ theme }) => ({
-    textTransform: "none",
-    minWidth: 0,
-    [theme.breakpoints.up("sm")]: {
-      minWidth: 0,
-    },
-    fontWeight: theme.typography.fontWeightRegular,
-    marginRight: theme.spacing(1),
-    color: "rgba(0, 0, 0, 0.85)",
-    fontFamily: [
-      "-apple-system",
-      "BlinkMacSystemFont",
-      '"Segoe UI"',
-      "Roboto",
-      '"Helvetica Neue"',
-      "Arial",
-      "sans-serif",
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(","),
-    "&:hover": {
-      color: "#8400fd",
-      opacity: 1,
-    },
-    "&.Mui-selected": {
-      color: "#8400fd",
-      fontWeight: theme.typography.fontWeightMedium,
-    },
-    "&.Mui-focusVisible": {
-      backgroundColor: "#d1eaff",
-    },
-  })
-);
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box component={'div'} sx={{ p: 3 }}>
+          <Box>{children}</Box>
+        </Box>
+      )}
+    </div>
+  );
+}TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
 const ProfileView = (props) => {
   const [value, setValue] = React.useState(0);
   const navigate = useNavigate();
@@ -62,18 +51,18 @@ const ProfileView = (props) => {
   };
   return (
     <>
-      <div className={styles.user_page}>
-        <Box className={styles.user_profile_container}>
-          <Box
-            className={styles.user_profile_pic}
-            style={{
-              backgroundImage: `url("https://avatars.dicebear.com/api/initials/.svg")`,
-              backgroundRepeat: "no-repeat",
-              backgroundSize: "cover",
-            }}
-          ></Box>
+      <div className={`${styles.user_page} container mt-4`}>
+        <Box className={`${styles.user_profile_container} container mt-4`}>
+        <div
+                className={`${styles.user_profile_pic} mt-2 mb-4 `}
+                style={{
+                  backgroundImage: `url("https://avatars.dicebear.com/api/initials/.svg")`,
+                  backgroundRepeat: "no-repeat",
+                  backgroundSize: "cover",
+                }}
+              ></div>
           <Box className={styles.view_userinfo}>
-            <Typography sx={{ fontSize: 14 }} color="#8400fd" gutterBottom>
+            <Typography sx={{ fontSize: 14 }} color="#8400fd" >
               Username#1234
             </Typography>
           </Box>
@@ -86,58 +75,51 @@ const ProfileView = (props) => {
               Set Profile
             </button>
           </Box>
-        </Box>
-        <div className={` ${styles.user_container}`}>
-          <div className={styles.user_data}>
-            <Card sx={{ minWidth: 300, m: 2, height: 80, square: true }}>
-              <CardContent>
-                <Typography sx={{ fontSize: 14 }} color="#8400fd" gutterBottom>
-                  About Me
-                </Typography>
-              </CardContent>
-            </Card>
-            <Card sx={{ minWidth: 300, m: 2, square: true, height: 80 }}>
-              <CardContent>
-                <Typography sx={{ fontSize: 14 }} color="#8400fd" gutterBottom>
-                  Skills
-                </Typography>
-                <Typography
-                  sx={{ mb: 1.5 }}
-                  color="text.secondary"
-                ></Typography>
-                <Typography variant="body2">
-                  <br />
-                </Typography>
-              </CardContent>
-            </Card>
+          <Box className={`${styles.skills} container mt-3`}>
 
-            <Card sx={{ minWidth: 300, square: true, m: 2, height: 80 }}>
-              <CardContent>
-                <Typography sx={{ fontSize: 14 }} color="#8400fd" gutterBottom>
-                  Teams
-                </Typography>
-                <Typography
-                  sx={{ mb: 1.5 }}
-                  color="text.secondary"
-                ></Typography>
-                <Typography variant="body2">
-                  <br />
-                </Typography>
-              </CardContent>
-            </Card>
-          </div>
-          <Box sx={{ bgcolor: "#fff", mt: "1rem" }}>
-            <AntTabs
-              value={value}
-              onChange={handleChange}
-              aria-label="ant example"
-            >
-              <AntTab label="Overview" />
-              <AntTab value="Activity" label="Activity" />
-              <AntTab value="Social" label="Social" />
-            </AntTabs>
-            <Box sx={{ p: 3 }} />
+            {/* <!-- Displaying skills for the user --> */}
+
+            <Typography>Skills</Typography>
+          <Stack direction="row" className="flex-wrap" spacing={1}>    
+                 <Chip
+                 className="m-2"
+                 label={"c++ "}        
+                 />  
+                  <Chip
+                 className="m-2"
+                 label={"c# "}        
+                 /> 
+              </Stack>
           </Box>
+        </Box>
+        <div className={` container mt-3`}>
+          
+          <Box sx={{ width: '80%' }}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
+          <Tab label="Overview" {...a11yProps(0)} />
+          <Tab label="Ongoing" {...a11yProps(1)} />
+          <Tab label="Closed" {...a11yProps(2)} />
+          <Tab label="completed" {...a11yProps(3)} />
+          <Tab label="request" {...a11yProps(4)} />
+        </Tabs>
+      </Box>
+      <TabPanel value={value} index={0}>
+      <ProjectContainer title={"ProjectTitle"} desc={"Project based on react.js"}  skills={"C++"}/>
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+      <ProjectContainer title={"ProjectOngoing"} desc={"Project based on react.js"} skills={"C++"}/>
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+      <ProjectContainer title={"ProjectClosed"} desc={"Project based on react.js"} skills={"C++"}/>
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+      <ProjectContainer title={"ProjectCompleted"} desc={"Project based on react.js"} skills={"C++"}/>
+      </TabPanel>
+      <TabPanel value={value} index={4}>
+      <Request title={"ProjectTitle"}/>
+      </TabPanel>
+    </Box>
         </div>
       </div>
     </>
