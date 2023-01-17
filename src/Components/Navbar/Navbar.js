@@ -15,33 +15,20 @@ const Navbar = (props) => {
     <div>
       <nav className={`navbar navbar-expand-lg ${styles.nav_div}`}>
         <div className="container-fluid mynav-font">
-          <h2 className={`${styles.logo} mb-0`}>CODEGRAM</h2>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
+
+          <h2 className={`${styles.logo} mb-0`} >CODEGRAM</h2>
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0 mx-md-auto">
               <li className="nav-item mynav-txt mx-3">
-                <Link to="/" className="nav-link active" aria-current="page">
-                  Home
-                </Link>
+
+                <Link to='/' className="nav-link active" aria-current="page">Home</Link>
               </li>
               <li className="nav-item dropdown">
-                <Link
-                  to="/"
-                  className="nav-link dropdown-toggle"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
+                <Link to='/' className="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Projects
                 </Link>
                 <ul className="dropdown-menu">
@@ -63,9 +50,8 @@ const Navbar = (props) => {
                 </ul>
               </li>
               <li className="nav-item mynav-txt mx-3">
-                <Link to="/" className="nav-link" href="#contact">
-                  Contact Us
-                </Link>
+                <Link to='/' className="nav-link" href="#contact">Contact Us</Link>
+
               </li>
             </ul>
             <div className="mx-3">
