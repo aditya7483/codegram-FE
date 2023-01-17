@@ -3,7 +3,8 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import styles from './CoderContainer.module.css';
-function CoderContainer() {
+import { Link } from "react-router-dom";
+function CoderContainer(props) {
   return (
     <>
     
@@ -20,21 +21,21 @@ function CoderContainer() {
                 }}
               ></div>
         <div className='d-flex flex-column '>
-          <Typography
+          <Typography component={'div'}
             sx={{ fontSize: 18}}
             color="#8400fd"
             gutterBottom
           >
-            CoderName
+            <Link to="/profile"> {props.user}</Link>
           </Typography>
 
-          <Typography   variant="body2" className="mt-2" gutterBottom>
-            Project based on react.js
+          <Typography component={'div'}  variant="body2" className="mt-2" gutterBottom>
+            {props.desc}
           </Typography>
-          <Typography  className="mt-2" color="text.secondary">
-            Skills
+          <Typography component={'div'} className="mt-2" color="text.secondary">
+            skills
             <br/>
-            <span className="badge bg-secondary">c++</span>  
+            <span className="badge bg-secondary">{props.skills}</span>  
           </Typography>
           </div>
         </CardContent>

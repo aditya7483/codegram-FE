@@ -5,39 +5,22 @@
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: 100vh;
   justify-content: center;
-}
-.section1 {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 .user_profile_container {
-  position: relative;
   height: 25rem;
   width: 22rem;
   padding: 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-right: 30px;
 }
-
 .user_profile_pic {
-  border-radius: 6rem;
-  height: 12.5rem;
-  width: 12.5rem;
-  font-size: 20px;
+  height: 53.3rem;
+  width: 10rem;
+  border-radius: 75px;
   cursor: pointer;
-}
-.view_user_profile {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 727px;
-  width: auto;
 }
 .view_userinfo {
   display: flex;
@@ -47,21 +30,10 @@
   cursor: pointer;
   flex-direction: column;
 }
-.user_container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 100%;
-  padding-top: 2rem;
-}
-.user_data {
-  width: 100%;
-  max-height: 50%;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-}
 .submit_btn {
   padding: 8px 10px;
+}
+.skills{
+  height: 100%;
+  width: 200px;
 }

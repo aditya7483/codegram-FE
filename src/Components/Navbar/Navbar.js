@@ -1,22 +1,16 @@
-
 import React from "react";
 import Login from "../Login/Login";
 import styles from "./Navbar.module.css";
 import { Link } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import IconButton from '@mui/material/IconButton';
-import { useNavigate } from "react-router-dom";
-
 
 const Navbar = (props) => {
   const handleLogout = () => {
     localStorage.removeItem("auth-token");
     window.location.reload();
   };
-  const navigate = useNavigate();
-  const handleSearch = () => {
-    navigate("/Search");
-  };
+ 
   return (
     <div>
       <nav className={`navbar navbar-expand-lg ${styles.nav_div}`}>
@@ -38,9 +32,21 @@ const Navbar = (props) => {
                   Projects
                 </Link>
                 <ul className="dropdown-menu">
-                  <li><Link to='/project/new' className="dropdown-item" >New Project</Link></li>
-                  <li><Link to='/' className="dropdown-item" >My Projects</Link></li>
-                  <li><Link to='/' className="dropdown-item" >Gloal Projects</Link></li>
+                  <li>
+                    <Link to="/project/new" className="dropdown-item">
+                      New Project
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/" className="dropdown-item">
+                      My Projects
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/project/Global" className="dropdown-item">
+                      Gloal Projects
+                    </Link>
+                  </li>
                 </ul>
               </li>
               <li className="nav-item mynav-txt mx-3">
@@ -49,14 +55,15 @@ const Navbar = (props) => {
               </li>
             </ul>
             <div className="mx-3">
+              <Link to="/Search" className="nav-link" href="#search">
               <IconButton
                 type="button"
                 sx={{ p: "10px" }}
                 aria-label="search"
-                onClick={handleSearch}
               >
                 <SearchIcon />
               </IconButton>
+              </Link>
             </div>
             <form className="d-flex" role="search">
               {!props.logged ? (

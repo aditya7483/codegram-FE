@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import styles from "./NewProject.module.css";
 import TextField from "@mui/material/TextField";
@@ -32,12 +31,10 @@ const NewProject = () => {
           label="Project Name"
           variant="standard"
         />
-
         <Autocomplete
           disableClearable
           clearOnEscape
           id="combo-box-1"
-
           className="my-4"
           options={inputData.projectDomains.data}
           multiple
@@ -46,7 +43,6 @@ const NewProject = () => {
           renderInput={(params) => (
             <TextField {...params} variant="standard" label="Project Type" />
           )}
-
         />
         <Autocomplete
           disableClearable
@@ -78,4 +74,3 @@ const NewProject = () => {
 };
 
 export default NewProject;
-
