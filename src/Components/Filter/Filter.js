@@ -5,22 +5,19 @@ import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import inputData from "../../Common-Resources/inputData.json";
 function Filter(props) {
- 
-  const [data,setData]= useState([])
-const [loading, setLoading]=useState(false)
+
+  const [data, setData] = useState([])
   const handleClick = (d) => {
-    let index=data.indexOf(d)
-    setLoading(true)
-    if(data.indexOf(d)===-1){
-      setData([...data,d])
+    let index = data.indexOf(d)
+    if (data.indexOf(d) === -1) {
+      setData([...data, d])
     }
-    else{
-      let newdata=data
-      newdata.splice(index,1)
-      setData(newdata)
+    else {
+      let newdata = data
+      newdata.splice(index, 1)
+      setData([...newdata])
     }
     console.log(data)
-    setLoading(false)
   };
 
   return (
@@ -55,25 +52,24 @@ const [loading, setLoading]=useState(false)
               ></button>
             </div>
             <div className="modal-body ">
-            <Stack direction="row" className="flex-wrap" spacing={1}>
-             
-              {!loading && (props.selected==='project'?(inputData.projectDomains.data ):(inputData.skills.data )).map((d) => {
-        return (
-            <Chip
-            sx={{color:`${data.indexOf(d)===-1 ?"blue":"red"}`}}
-                  className="m-2"
-                  label={d} 
-                  onClick={ ()=>{
-                    handleClick(d)
-                  }
-                }
-                      
-                  />     
-              );
-            })} </Stack>
+              <Stack direction="row" className="flex-wrap" spacing={1}>
+
+                {(props.selected === 'project' ? (inputData.projectDomains.data) : (inputData.skills.data)).map((d) => {
+                  return (
+                    <Chip
+                      sx={{ color: `${data.indexOf(d) === -1 ? "blue" : "red"}` }}
+                      className="m-2"
+                      label={d}
+                      onClick={() => {
+                        handleClick(d)
+                      }
+                      }
+
+                    />
+                  );
+                })} </Stack>
             </div>
             <div className="modal-footer">
-            <button  type="button" className="btn btn-primary" onClick={()=>{console.log(data)}}>click</button>
               <button type="button" className="btn btn-primary">
                 Save changes
               </button>

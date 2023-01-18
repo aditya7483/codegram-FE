@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 import ProjectContainer from "../../Components/ProjectContainer/ProjectContainer";
 import CoderContainer from "../../Components/CoderContainer/CoderContainer";
 import Filter from "../../Components/Filter/Filter";
+import './Search.css'
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -44,15 +45,15 @@ function a11yProps(index) {
 
 function Search() {
   const [value, setValue] = React.useState(0);
-  const [selected,setSelected] = useState('project')
+  const [selected, setSelected] = useState('project')
   const handleChange = (event, newValue) => {
     setValue(newValue);
     console.log(newValue);
-    if(selected==='project'){
+    if (selected === 'project') {
       setSelected('user');
 
     }
-    else{
+    else {
       setSelected('project');
     }
   };
@@ -74,8 +75,8 @@ function Search() {
         </form>
       </div>
       <Box className={`${styles.sub_div} container d-flex flex-column flex-fill mt-3 `}>
-        <Box sx={{ width: "58%",marginRight:"70px" }}>
-          <Box sx={{ borderBottom: 1, borderColor: "divider"}}>
+        <Box className={`${styles.display_div}`}>
+          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
             <Tabs
               value={value}
               onChange={handleChange}
@@ -85,13 +86,13 @@ function Search() {
               <Tab sx={{ width: "425px" }} label="Coders" {...a11yProps(1)} />
             </Tabs>
           </Box>
-          <TabPanel  value={value} index={0}>
+          <TabPanel value={value} index={0}>
             {/* <!-- List of Project --> */}
-            <ProjectContainer title={"ProjectTitle"} desc={"Project based on react.js"}  skills={"C++"}/>
+            <ProjectContainer title={"ProjectTitle"} desc={"Project based on react.js"} skills={"C++"} />
           </TabPanel>
-          <TabPanel  value={value} index={1}>
+          <TabPanel value={value} index={1}>
             {/* <!-- List of Coders --> */}
-            <CoderContainer user={"username"} desc={"Project based on react.js"}  skills={"C++"}/>
+            <CoderContainer user={"username"} desc={"Project based on react.js"} skills={"C++"} />
           </TabPanel>
         </Box>
       </Box>
