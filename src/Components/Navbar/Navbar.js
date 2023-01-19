@@ -5,12 +5,12 @@ import { Link } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import IconButton from '@mui/material/IconButton';
 
-const Navbar = (props) => {
+const Navbar = ({ loggedIn }) => {
   const handleLogout = () => {
     localStorage.removeItem("auth-token");
     window.location.reload();
   };
- 
+
   return (
     <div>
       <nav className={`navbar navbar-expand-lg ${styles.nav_div}`}>
@@ -56,17 +56,17 @@ const Navbar = (props) => {
             </ul>
             <div className="mx-3">
               <Link to="/Search" className="nav-link" href="#search">
-              <IconButton
-                type="button"
-                sx={{ p: "10px" }}
-                aria-label="search"
-              >
-                <SearchIcon />
-              </IconButton>
+                <IconButton
+                  type="button"
+                  sx={{ p: "10px" }}
+                  aria-label="search"
+                >
+                  <SearchIcon />
+                </IconButton>
               </Link>
             </div>
             <form className="d-flex" role="search">
-              {!props.logged ? (
+              {!loggedIn ? (
                 <button
                   type="button"
                   className={`btn_prim ${styles.btn_prim}`}
