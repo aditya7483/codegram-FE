@@ -8,8 +8,7 @@ import Search from "./Pages/Search/Search";
 import "./root.css";
 import NewProject from "./Pages/Project/New-Project/NewProject";
 import Filter from './Components/Filter/Filter'
-import Globalproject from "./Pages/Project/Global-Project/Globalproject";
-
+import Projectview from "./Pages/Project/Project-View/ProjectView";
 const App = () => {
   return (
     <BrowserRouter>
@@ -21,8 +20,8 @@ const App = () => {
         <Route path="/Filter" element={<Filter />} />
         <Route path="/profileSetting" element={<ProfileSetting />} />
         <Route path="/project">
-          <Route path="Global" element={<Globalproject />} />
           <Route path="new" element={<NewProject />} />
+          <Route path="view" element={<Projectview />} />
         </Route>
       </Routes>
     </BrowserRouter>

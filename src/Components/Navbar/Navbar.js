@@ -37,16 +37,6 @@ const Navbar = (props) => {
                       New Project
                     </Link>
                   </li>
-                  <li>
-                    <Link to="/" className="dropdown-item">
-                      My Projects
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/project/Global" className="dropdown-item">
-                      Gloal Projects
-                    </Link>
-                  </li>
                 </ul>
               </li>
               <li className="nav-item mynav-txt mx-3">
