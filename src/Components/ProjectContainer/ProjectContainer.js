@@ -2,20 +2,28 @@ import React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import { Link } from "react-router-dom";
+import Chip from "@mui/material/Chip";
+import Stack from "@mui/material/Stack";
 // import Box from "@mui/material/Box";
 // import styles from "./ProjectContainer.module.css";
 function ProjectContainer(props) {
   return (
     
-      <Card sx={{ Width: 6, m: 2, height: 150, square: true }}>
+      <Card sx={{ Width: 6, m: 2, height: 120, square: true }}>
         <CardContent>
-          <Typography
+          <Typography 
+          className="d-flex flex-row flex-fill justify-content-between"
           component={'div'}
             sx={{ fontSize: 18, margin: "auto" }}
             color="#8400fd"
             gutterBottom
           >
-            {props.title}
+           <Link to="/project/view"> {props.title}</Link>
+           <Stack direction="row" className="flex-wrap" spacing={1}>    
+                 <Chip
+                 label={"Status"}        
+                 /> </Stack>
           </Typography>
 
           <Typography component={'div'} variant="body2" className="mt-2">

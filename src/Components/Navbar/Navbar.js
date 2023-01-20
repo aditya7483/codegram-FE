@@ -33,6 +33,7 @@ const Navbar = ({ loggedIn, setLoggedIn }) => {
                   Projects
                 </Link>
                 <ul className="dropdown-menu">
+
                   {loggedIn &&
                     <>
                       <li>

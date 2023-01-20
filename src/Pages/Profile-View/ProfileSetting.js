@@ -103,7 +103,6 @@ function ProfileSetting() {
                 Update profile
               </button>
             </form>
-          
           </div>
         </div>
       </div>
