@@ -5,8 +5,9 @@ import { Link } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import IconButton from '@mui/material/IconButton';
 
-const Navbar = ({ loggedIn }) => {
+const Navbar = ({ loggedIn, setLoggedIn }) => {
   const handleLogout = () => {
+    setLoggedIn(false)
     localStorage.removeItem("auth-token");
     window.location.reload();
   };
@@ -32,16 +33,20 @@ const Navbar = ({ loggedIn }) => {
                   Projects
                 </Link>
                 <ul className="dropdown-menu">
-                  <li>
-                    <Link to="/project/new" className="dropdown-item">
-                      New Project
-                    </Link>
-                  </li>
-                  <li>
-                    <Link to="/" className="dropdown-item">
-                      My Projects
-                    </Link>
-                  </li>
+                  {loggedIn &&
+                    <>
+                      <li>
+                        <Link to="/project/new" className="dropdown-item">
+                          New Project
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/" className="dropdown-item">
+                          My Projects
+                        </Link>
+                      </li>
+                    </>
+                  }
                   <li>
                     <Link to="/project/Global" className="dropdown-item">
                       Gloal Projects
@@ -51,7 +56,6 @@ const Navbar = ({ loggedIn }) => {
               </li>
               <li className="nav-item mynav-txt mx-3">
                 <Link to='/' className="nav-link" href="#contact">Contact Us</Link>
-
               </li>
             </ul>
             <div className="mx-3">

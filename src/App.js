@@ -17,10 +17,10 @@ const App = () => {
   const [loggedIn, setLoggedIn] = useState(false)
 
   useEffect(() => {
-    axios.defaults.baseURL = 'https://codegram-be.vercel.app/';
+    axios.defaults.baseURL = 'https://codegram-be.vercel.app/api';
     axios.defaults.headers.post['Content-Type'] = 'application/json';
     const AUTH = window.localStorage.getItem('auth-token');
-    if (AUTH && AUTH != undefined && AUTH.length > 0) {
+    if (AUTH && AUTH !== undefined && AUTH.length > 0) {
       axios.defaults.headers.common['auth-token'] = AUTH;
       setLoggedIn(true)
     }
@@ -28,7 +28,7 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <Navbar loggedIn={loggedIn} />
+      <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/profile" element={<ProfileView />} />

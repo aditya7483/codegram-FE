@@ -15,9 +15,9 @@ const Login = () => {
     email: '',
     username: '',
     password: '',
-    errors: '',
     skills: []
   });
+  const [error, setError] = useState('');
 
   const onChangeSkills = (event, value) => {
     setFields({
@@ -39,18 +39,18 @@ const Login = () => {
     setLoading(true)
     if (fields.username.length < 5 || fields.password.length < 5) {
       setLoading(false)
-      setFields({ ...fields, errors: 'The username and password must contain atleast 5 characters' })
+      setError('The username and password must contain atleast 5 characters')
     }
     else {
       try {
-        const res = await axios.post('/api/auth/login', {
+        const res = await axios.post('/auth/login', {
           username: fields.username,
           password: fields.password
         });
         window.localStorage.setItem('auth-token', `${res.data.authToken}`)
         window.location.reload()
       } catch (error) {
-        setFields({ ...fields, errors: (error.response.data.err || 'An error occurred') })
+        setError((error.response.data.err || 'An error occurred'))
       }
     }
   }
@@ -61,27 +61,23 @@ const Login = () => {
     setLoading(true)
 
     if (!isValidEmail(fields.email)) {
-      setLoading(false)
-      setFields({ ...fields, errors: 'Please Enter a valid email' })
+      setError('Please Enter a valid email')
     }
     else if (fields.username.length < 5 || fields.password.length < 5) {
-      setLoading(false)
-      setFields({ ...fields, errors: 'The username and password must contain atleast 5 characters' })
+      setError('The username and password must contain atleast 5 characters')
     }
     else {
       try {
-        const res = await axios.post('/api/auth/signup', {
-          username: fields.username,
-          password: fields.password,
-          email: fields.email,
-          skills: fields.skills
+        const res = await axios.post('/auth/signup', {
+          ...fields
         });
         window.localStorage.setItem('auth-token', `${res.data.authToken}`)
         window.location.reload()
       } catch (error) {
-        setFields({ ...fields, errors: (error.response.data.err || 'An error occurred') })
+        setError((error.response.data.err || 'An error occurred'))
       }
     }
+    setLoading(false)
   }
 
   return (
@@ -105,8 +101,8 @@ const Login = () => {
             </div>
             <form>
               <div className="modal-body">
-                {fields.errors.length !== 0 && <div className="alert alert-danger" role="alert">
-                  {fields.errors}
+                {error.length !== 0 && <div className="alert alert-danger" role="alert">
+                  {error}
                 </div>
 
                 }
