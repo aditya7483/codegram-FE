@@ -5,12 +5,13 @@ import { Link } from "react-router-dom";
 import SearchIcon from "@mui/icons-material/Search";
 import IconButton from '@mui/material/IconButton';
 
-const Navbar = (props) => {
+const Navbar = ({ loggedIn, setLoggedIn }) => {
   const handleLogout = () => {
+    setLoggedIn(false)
     localStorage.removeItem("auth-token");
     window.location.reload();
   };
- 
+
   return (
     <div>
       <nav className={`navbar navbar-expand-lg ${styles.nav_div}`}>
@@ -32,31 +33,45 @@ const Navbar = (props) => {
                   Projects
                 </Link>
                 <ul className="dropdown-menu">
+
+                  {loggedIn &&
+                    <>
+                      <li>
+                        <Link to="/project/new" className="dropdown-item">
+                          New Project
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/" className="dropdown-item">
+                          My Projects
+                        </Link>
+                      </li>
+                    </>
+                  }
                   <li>
-                    <Link to="/project/new" className="dropdown-item">
-                      New Project
+                    <Link to="/project/Global" className="dropdown-item">
+                      Gloal Projects
                     </Link>
                   </li>
                 </ul>
               </li>
               <li className="nav-item mynav-txt mx-3">
                 <Link to='/' className="nav-link" href="#contact">Contact Us</Link>
-
               </li>
             </ul>
             <div className="mx-3">
               <Link to="/Search" className="nav-link" href="#search">
-              <IconButton
-                type="button"
-                sx={{ p: "10px" }}
-                aria-label="search"
-              >
-                <SearchIcon />
-              </IconButton>
+                <IconButton
+                  type="button"
+                  sx={{ p: "10px" }}
+                  aria-label="search"
+                >
+                  <SearchIcon />
+                </IconButton>
               </Link>
             </div>
             <form className="d-flex" role="search">
-              {!props.logged ? (
+              {!loggedIn ? (
                 <button
                   type="button"
                   className={`btn_prim ${styles.btn_prim}`}

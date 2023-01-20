@@ -1,15 +1,30 @@
 import React, { useState } from 'react'
 import styles from './Login.module.css'
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
+import inputData from "../../Common-Resources/inputData.json"
+import { isValidEmail } from '../../Common-Resources';
+import axios from 'axios'
+import { Backdrop, CircularProgress } from '@mui/material';
 
 const Login = () => {
 
+  const [loading, setLoading] = useState(false);
   const [login, setLogin] = useState(true)
   const [fields, setFields] = useState({
     email: '',
     username: '',
     password: '',
-    errors: ''
+    skills: []
   });
+  const [error, setError] = useState('');
+
+  const onChangeSkills = (event, value) => {
+    setFields({
+      ...fields,
+      skills: [...value]
+    })
+  };
 
   const handleFieldChange = (e) => {
     const { name, value } = e.target
@@ -21,17 +36,59 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true)
+    if (fields.username.length < 5 || fields.password.length < 5) {
+      setLoading(false)
+      setError('The username and password must contain atleast 5 characters')
+    }
+    else {
+      try {
+        const res = await axios.post('/auth/login', {
+          username: fields.username,
+          password: fields.password
+        });
+        window.localStorage.setItem('auth-token', `${res.data.authToken}`)
+        window.location.reload()
+      } catch (error) {
+        setError((error.response.data.err || 'An error occurred'))
+      }
+    }
   }
+
+
   const handleSignup = async (e) => {
     e.preventDefault();
+    setLoading(true)
+
+    if (!isValidEmail(fields.email)) {
+      setError('Please Enter a valid email')
+    }
+    else if (fields.username.length < 5 || fields.password.length < 5) {
+      setError('The username and password must contain atleast 5 characters')
+    }
+    else {
+      try {
+        const res = await axios.post('/auth/signup', {
+          ...fields
+        });
+        window.localStorage.setItem('auth-token', `${res.data.authToken}`)
+        window.location.reload()
+      } catch (error) {
+        setError((error.response.data.err || 'An error occurred'))
+      }
+    }
+    setLoading(false)
   }
 
   return (
     <div>
 
-      {/* <!-- Button trigger modal --> */}
-
-
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
       {/* <!-- Modal --> */}
       <div className="modal fade" id="LoginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div className="modal-dialog">
@@ -43,19 +100,20 @@ const Login = () => {
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form>
-              {/* Modal Content for Login */}
-
               <div className="modal-body">
-                {fields.errors.length !== 0 && <div className="alert alert-danger" role="alert">
-                  {fields.errors}
+                {error.length !== 0 && <div className="alert alert-danger" role="alert">
+                  {error}
                 </div>
 
                 }
                 {
-                  !login && <div className="mb-3">
-                    <label htmlFor="loginEmail" className="form-label">Email</label>
-                    <input type="email" value={fields.email} name="email" className="form-control" id="loginEmail" placeholder="Enter Your Email" required onChange={handleFieldChange} />
-                  </div>
+                  !login &&
+                  <>
+                    <div className="mb-3">
+                      <label htmlFor="loginEmail" className="form-label">Email</label>
+                      <input type="email" value={fields.email} name="email" className="form-control" id="loginEmail" placeholder="Enter Your Email" required onChange={handleFieldChange} />
+                    </div>
+                  </>
                 }
                 <div className="mb-3">
                   <label htmlFor="loginUsername" className="form-label">Username</label>
@@ -65,6 +123,24 @@ const Login = () => {
                   <label htmlFor="loginPass" className="form-label">Password</label>
                   <input type="password" name="password" className="form-control" id="loginPass" placeholder="Enter Your Password" value={fields.password} required minLength={'5'} onChange={handleFieldChange} />
                 </div>
+
+                {!login && <Autocomplete
+                  disableClearable
+                  clearOnEscape
+                  id="combo-box-2"
+                  className="my-4"
+                  options={inputData.skills.data}
+                  multiple
+                  value={fields.skills}
+                  onChange={onChangeSkills}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="standard"
+                      label="Enter your skills"
+                    />
+                  )}
+                />}
 
               </div>
               <div className="modal-footer justify-content-center flex-column">
@@ -80,13 +156,12 @@ const Login = () => {
                       <>
                         Dont have an account? <button className={`border-0 ${styles.change_btn}`} onClick={() => {
                           setLogin(false);
-                          handleFieldChange();
                         }}>Signup</button>
                       </> :
                       <>
-                        Already have an account? <button className={`border-0 ${styles.change_btn}`} onClick={() => {
+                        Already have an account? <button className={`border-0 ${styles.change_btn}`} onClick={(e) => {
+                          e.preventDefault()
                           setLogin(true);
-                          handleFieldChange();
                         }}>Login</button>
                       </>
                   }
