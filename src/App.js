@@ -12,6 +12,7 @@ import Filter from './Components/Filter/Filter'
 
 import Projectview from "./Pages/Project/Project-View/ProjectView";
 
+
 // import Globalproject from "./Pages/Project/Global-Project/Globalproject";
 import axios from "axios";
 import MyProject from "./Pages/Project/My-Projects/MyProject";
@@ -35,7 +36,7 @@ const App = () => {
     <BrowserRouter>
       <Navbar loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
       <Routes>
-        <Route path="/" element={<Landing />} />
+        <Route path="/" element={<Landing />}  />
         <Route path="/profile" element={<ProfileView />} />
         <Route path="/search" element={<Search />} />
         <Route path="/Filter" element={<Filter />} />

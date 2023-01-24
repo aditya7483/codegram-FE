@@ -1,8 +1,14 @@
+
+
+import { Helmet } from 'react-helmet';
+
+
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import styles from "./ProjectView.module.css";
 import { useSearchParams } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
+
 
 function ProjectView(props) {
 
@@ -29,6 +35,11 @@ function ProjectView(props) {
   }, []);
 
   return (
+    <>
+    <Helmet>
+        <title>CodeGram | Project</title>
+      </Helmet>
+    
     <div
       className={`${styles.main_div} d-flex flex-column align-items-center my-4`}
     >
@@ -43,6 +54,7 @@ function ProjectView(props) {
         })
       }
     </div>
+    </>
   );
 }
 

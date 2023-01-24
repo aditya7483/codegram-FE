@@ -4,8 +4,9 @@ import styles from './Landing.module.css'
 import CodeIcon from '@mui/icons-material/Code';
 import TerminalIcon from '@mui/icons-material/Terminal';
 import GroupIcon from '@mui/icons-material/Group';
-
+import { Helmet } from 'react-helmet';
 const Landing = () => {
+  
   const elements = [
     {
       Icon: CodeIcon,
@@ -33,6 +34,9 @@ const Landing = () => {
     },
   ]
   return (
+    <><Helmet>
+    <title>CodeGram | Home</title>
+  </Helmet>
     <div className={`${styles.main_div} mt-5`}>
       <div className={`${styles.header_div} mx-auto`}>
         <h1 className={`text-center ${styles.heading_primary}`}>Welcome to CodeGram</h1>
@@ -58,6 +62,7 @@ const Landing = () => {
         <Carousel elements={elements} />
       </div>
     </div>
+    </>
   )
 }
 

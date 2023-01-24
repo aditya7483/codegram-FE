@@ -10,8 +10,11 @@ import ProjectContainer from "../../Components/ProjectContainer/ProjectContainer
 import CoderContainer from "../../Components/CoderContainer/CoderContainer";
 import Filter from "../../Components/Filter/Filter";
 import './Search.css'
+import { Helmet } from 'react-helmet';
+
 import axios from "axios";
 import { CircularProgress } from "@mui/material";
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -87,6 +90,9 @@ function Search() {
 
   return (
     <>
+    <Helmet>
+        <title>CodeGram | Search</title>
+      </Helmet>
       <div className="container mt-3 p-3">
         <form className={`${styles.main_div} form-inline my-2 `}>
           <input

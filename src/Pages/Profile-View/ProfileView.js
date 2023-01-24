@@ -11,6 +11,7 @@ import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
 import Groups2Icon from '@mui/icons-material/Groups2';
 import Request from './../../Components/Request/Request'
+import { Helmet } from 'react-helmet';
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -64,6 +65,9 @@ const ProfileView = (props) => {
   };
   return (
     <>
+    <Helmet>
+        <title>CodeGram | Profile</title>
+      </Helmet>
       <div className={`${styles.user_page} container mt-4`}>
         <Box className={`${styles.user_profile_container} container mt-4`}>
          <div
