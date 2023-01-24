@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./Search.module.css";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
@@ -11,6 +11,10 @@ import CoderContainer from "../../Components/CoderContainer/CoderContainer";
 import Filter from "../../Components/Filter/Filter";
 import './Search.css'
 import { Helmet } from 'react-helmet';
+
+import axios from "axios";
+import { CircularProgress } from "@mui/material";
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -47,6 +51,31 @@ function a11yProps(index) {
 function Search() {
   const [value, setValue] = React.useState(0);
   const [selected, setSelected] = useState('project')
+  const [data, setData] = useState([]);
+  const [loading, setloading] = useState(false);
+  useEffect(
+    () => {
+      setloading(true)
+      axios.defaults.baseURL = 'https://codegram-be.vercel.app/api';
+      axios.defaults.headers.post['Content-Type'] = 'application/json';
+      const AUTH = window.localStorage.getItem('auth-token');
+      if (AUTH && AUTH !== undefined && AUTH.length > 0) {
+        axios.defaults.headers.common['auth-token'] = AUTH;
+      }
+      (async () => {
+        try {
+          const res = await axios.get(`project/filter`)
+          setData([...res.data])
+        } catch (error) {
+          window.alert(`An error occured`)
+          console.log(error)
+        }
+      })()
+      setloading(false)
+    }
+    , []
+  )
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
     console.log(newValue);
@@ -80,6 +109,7 @@ function Search() {
       </div>
       <Box className={`${styles.sub_div} container d-flex flex-column flex-fill mt-3 `}>
         <Box className={`${styles.display_div}`}>
+
           <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
             <Tabs
               value={value}
@@ -91,12 +121,23 @@ function Search() {
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
+            {loading && <CircularProgress color="inherit" className="mx-auto d-block" />}
             {/* <!-- List of Project --> */}
-            <ProjectContainer title={"ProjectTitle"} desc={"Project based on react.js"} skills={"C++"} />
+            {
+              data.map((ele) => {
+                return <ProjectContainer {...ele} />
+              })
+            }
+
           </TabPanel>
           <TabPanel value={value} index={1}>
+            {loading && <CircularProgress color="inherit" className="mx-auto d-block" />}
             {/* <!-- List of Coders --> */}
-            <CoderContainer user={"username"} desc={"Project based on react.js"} skills={"C++"} />
+            {
+              data.map((ele) => {
+                return <CoderContainer {...ele} />
+              })
+            }
           </TabPanel>
         </Box>
       </Box>
