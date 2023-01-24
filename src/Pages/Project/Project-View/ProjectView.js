@@ -4,6 +4,7 @@ import TextField from "@mui/material/TextField";
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { Helmet } from 'react-helmet';
 // import Autocomplete from "@mui/material/Autocomplete";
 // import inputData from "../../../Common-Resources/inputData.json";
 
@@ -35,6 +36,11 @@ function ProjectView()  {
   }
 
   return (
+    <>
+    <Helmet>
+        <title>CodeGram | Project</title>
+      </Helmet>
+    
     <div
     className={`${style.main_div} d-flex flex-column align-items-center my-4`}
   >
@@ -128,6 +134,7 @@ function ProjectView()  {
       <button type="button"   className={`${style.submit_btn} btn_prim my-3 mx-2`} onClick={handleDelete}>Delete</button></div>
     </form>
     </div>
+    </>
   );
 }
  

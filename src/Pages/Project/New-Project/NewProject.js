@@ -3,7 +3,7 @@ import styles from "./NewProject.module.css";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import inputData from "../../../Common-Resources/inputData.json";
-
+import { Helmet } from 'react-helmet';
 const NewProject = () => {
   const [projectValues, setProjectValues] = useState([]);
   const [skillsValues, setSkillsValues] = useState([]);
@@ -18,6 +18,9 @@ const NewProject = () => {
   };
 
   return (
+    <><Helmet>
+    <title>CodeGram | Create Project</title>
+  </Helmet>
     <div
       className={`${styles.main_div} d-flex flex-column align-items-center my-4`}
     >
@@ -70,6 +73,7 @@ const NewProject = () => {
         </button>
       </form>
     </div>
+    </>
   );
 };
 

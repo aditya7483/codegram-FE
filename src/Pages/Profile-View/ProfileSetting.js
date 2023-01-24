@@ -4,6 +4,8 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import styles from "./ProfileSetting.module.css";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from 'react-helmet';
+
 function ProfileSetting() {
   const [fields, setFields] = useState({
     email: "",
@@ -29,6 +31,9 @@ function ProfileSetting() {
   };
   return (
     <>
+     <Helmet>
+        <title>CodeGram | Settings</title>
+      </Helmet>
       <div className="container">
         <div className={` d-flex m-2  flex-row-reverse`}>
           <button

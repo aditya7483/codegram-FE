@@ -9,12 +9,13 @@ import "./root.css";
 import NewProject from "./Pages/Project/New-Project/NewProject";
 import Filter from './Components/Filter/Filter'
 import Projectview from "./Pages/Project/Project-View/ProjectView";
+
 const App = () => {
   return (
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Landing />} />
+        <Route path="/" element={<Landing />}  />
         <Route path="/profile" element={<ProfileView />} />
         <Route path="/search" element={<Search />} />
         <Route path="/Filter" element={<Filter />} />
