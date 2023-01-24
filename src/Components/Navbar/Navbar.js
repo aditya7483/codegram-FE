@@ -42,7 +42,7 @@ const Navbar = ({ loggedIn, setLoggedIn }) => {
                         </Link>
                       </li>
                       <li>
-                        <Link to="/" className="dropdown-item">
+                        <Link to="/project/myProjects" className="dropdown-item">
                           My Projects
                         </Link>
                       </li>

@@ -30,7 +30,8 @@ const NewProject = () => {
         const res = await axios.post('/project/new', {
           ...fields
         });
-        console.log(res)
+        console.log(res.data);
+        redirect('/project/myproject')
       } catch (error) {
         setError((error.response.data.err || 'An error occurred'))
       }
@@ -58,11 +59,12 @@ const NewProject = () => {
 
         }
         <TextField
-          id="standard-basic"
+          id="name"
+          inputProps={{ maxLength: 20 }}
+          margin="normal"
           required={true}
           className="my-4"
           label="Project Name"
-          variant="standard"
           value={fields.name}
           onChange={(e) => {
             setFields({
@@ -79,7 +81,7 @@ const NewProject = () => {
           id="combo-box-1"
           className="mb-4"
           options={inputData.projectDomains.data}
-          // multiple
+          margin="normal"
           onChange={(e, val) => {
             setFields({
               ...fields,
@@ -87,12 +89,13 @@ const NewProject = () => {
             })
           }}
           renderInput={(params) => (
-            <TextField {...params} variant="standard" label="Project Domain" />
+            <TextField {...params} margin="normal" label="Project Domain" />
           )}
         />
         <TextField
-          id="standard-basic"
+          id="ref_link"
           required={true}
+          inputProps={{ maxLength: 100 }}
           className="mb-4"
           name="ref_link"
           onChange={(e) => {
@@ -102,22 +105,20 @@ const NewProject = () => {
             })
           }}
           label="Reference links"
-          variant="standard"
+          // variant="standard"
+          margin="normal"
         />
-        <div className="form-floating mt-3">
-          <textarea
-            value={fields.description}
-            onChange={(e) => {
-              setFields({
-                ...fields,
-                description: e.target.value
-              })
-            }} name='description'
-            className="form-control"
-            style={{ height: '100px' }}>
-          </textarea>
-          <label htmlFor="floatingTextarea2">Description</label>
-        </div>
+        <TextField
+          className="my-4"
+          id="description"
+          inputProps={{ maxLength: 250 }}
+          label="Project Description"
+          onChange={e => setFields({ ...fields, description: e.target.value })}
+          margin="normal"
+          fullWidth
+          multiline
+          rows={4}
+        />
         <button
           type="submit"
           onClick={handleSubmit}

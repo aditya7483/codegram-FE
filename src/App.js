@@ -12,8 +12,9 @@ import Filter from './Components/Filter/Filter'
 
 import Projectview from "./Pages/Project/Project-View/ProjectView";
 
-import Globalproject from "./Pages/Project/Global-Project/Globalproject";
+// import Globalproject from "./Pages/Project/Global-Project/Globalproject";
 import axios from "axios";
+import MyProject from "./Pages/Project/My-Projects/MyProject";
 
 
 const App = () => {
@@ -42,6 +43,7 @@ const App = () => {
         <Route path="/project">
           <Route path="new" element={<NewProject />} />
           <Route path="view" element={<Projectview />} />
+          <Route path="myProjects" element={<MyProject />} />
         </Route>
       </Routes>
     </BrowserRouter>
