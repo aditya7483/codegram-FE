@@ -17,8 +17,15 @@ function Filter(props) {
       newdata.splice(index, 1)
       setData([...newdata])
     }
-    console.log(data)
   };
+
+  const handleSave = (e) => {
+    const { setDomain } = props
+    e.preventDefault();
+    setDomain([...data])
+  }
+
+
 
   return (
     <div>
@@ -70,7 +77,11 @@ function Filter(props) {
                 })} </Stack>
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-primary">
+
+              <button type="button" className="btn btn-primary" onClick={() => { setData([]) }}>
+                Clear
+              </button>
+              <button type="button" data-bs-dismiss="modal" className="btn btn-primary" onClick={handleSave}>
                 Save changes
               </button>
             </div>

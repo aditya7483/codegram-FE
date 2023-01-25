@@ -9,25 +9,26 @@ const MyProject = (props) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
+  axios.defaults.baseURL = 'https://codegram-be.vercel.app/api';
+  axios.defaults.headers.post['Content-Type'] = 'application/json';
+  const AUTH = window.localStorage.getItem('auth-token');
+  if (AUTH && AUTH !== undefined && AUTH.length > 0) {
+    axios.defaults.headers.common['auth-token'] = AUTH;
+  }
+
+  const fetchData = async () => {
     setLoading(true)
-    axios.defaults.baseURL = 'https://codegram-be.vercel.app/api';
-    axios.defaults.headers.post['Content-Type'] = 'application/json';
-    const AUTH = window.localStorage.getItem('auth-token');
-    if (AUTH && AUTH !== undefined && AUTH.length > 0) {
-      axios.defaults.headers.common['auth-token'] = AUTH;
+    try {
+      const res = await axios.get(`project/userProjects`)
+      setData([...res.data])
+    } catch (error) {
+      window.alert(`${error.response.data.err || 'An error occured'}`)
+      console.log(error)
     }
-    (async () => {
-      try {
-        const res = await axios.get(`project/userProjects`)
-        setData([...res.data])
-        console.log(res.data)
-      } catch (error) {
-        window.alert(`${error.response.data.err || 'An error occured'}`)
-        console.log(error)
-      }
-    })()
     setLoading(false)
+  }
+  useEffect(() => {
+    fetchData()
   }, []);
 
   return (
