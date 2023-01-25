@@ -13,6 +13,7 @@ import './Search.css'
 import { Helmet } from 'react-helmet';
 import axios from "axios";
 import { CircularProgress } from "@mui/material";
+import { useSearchParams } from "react-router-dom";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -51,33 +52,55 @@ function Search() {
   const [value, setValue] = React.useState(0);
   const [selected, setSelected] = useState('project')
   const [data, setData] = useState([]);
-  const [loading, setloading] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [domain, setDomain] = useState([]);
+  axios.defaults.baseURL = 'https://codegram-be.vercel.app/api';
+  axios.defaults.headers.post['Content-Type'] = 'application/json';
+  const AUTH = window.localStorage.getItem('auth-token');
+  if (AUTH && AUTH !== undefined && AUTH.length > 0) {
+    axios.defaults.headers.common['auth-token'] = AUTH;
+  }
+
+  const fetchData = async () => {
+    setData([])
+    setLoading(true);
+    try {
+      let url = `project/filter`
+      const name = searchParams.get('name')
+      if (name) {
+        url += `?name=${name}`
+      }
+      console.log(url)
+      const res = await axios.post(url, {
+        domain
+      })
+      setData([...res.data])
+    } catch (error) {
+      window.alert(`An error occured`)
+      console.log(error)
+    }
+
+    setLoading(false)
+  }
   useEffect(
     () => {
-      setloading(true)
-      axios.defaults.baseURL = 'https://codegram-be.vercel.app/api';
-      axios.defaults.headers.post['Content-Type'] = 'application/json';
-      const AUTH = window.localStorage.getItem('auth-token');
-      if (AUTH && AUTH !== undefined && AUTH.length > 0) {
-        axios.defaults.headers.common['auth-token'] = AUTH;
-      }
-      (async () => {
-        try {
-          const res = await axios.get(`project/filter`)
-          setData([...res.data])
-        } catch (error) {
-          window.alert(`An error occured`)
-          console.log(error)
-        }
-      })()
-      setloading(false)
+      fetchData()
     }
-    , []
+    , [domain]
   )
+
+  const handleSearch = async (e) => {
+    e.preventDefault()
+    searchParams.set('name', e.target[0].value)
+    const url = new URL(window.location);
+    url.searchParams.set(`name`, `${e.target[0].value}`);
+    window.history.pushState({}, '', url)
+    fetchData()
+  }
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    console.log(newValue);
     if (selected === 'project') {
       setSelected('user');
 
@@ -89,21 +112,23 @@ function Search() {
 
   return (
     <>
-    <Helmet>
+      <Helmet>
         <title>CodeGram | Search</title>
       </Helmet>
       <div className="container mt-3 p-3">
-        <form className={`${styles.main_div} form-inline my-2 `}>
+        <form className={`${styles.main_div} form-inline my-2 `} onSubmit={handleSearch}>
           <input
             className={`${styles.formc} form-control mr-sm-2 `}
             type="search"
             placeholder="Search"
             aria-label="Search"
+          // value={searchText}
+          // onChange={(e) => { setSearchText(e.target.value) }}
           />
           <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
             <SearchIcon />
           </IconButton>
-          <Filter selected={selected} />
+          <Filter selected={selected} domain={domain} setDomain={setDomain} />
         </form>
       </div>
       <Box className={`${styles.sub_div} container d-flex flex-column flex-fill mt-3 `}>
@@ -124,17 +149,17 @@ function Search() {
             {/* <!-- List of Project --> */}
             {
               data.map((ele) => {
-                return <ProjectContainer {...ele} />
+                return <ProjectContainer key={ele.name} {...ele} />
               })
             }
 
           </TabPanel>
           <TabPanel value={value} index={1}>
-            {loading && <CircularProgress color="inherit" className="mx-auto d-block" />}
             {/* <!-- List of Coders --> */}
-            {
+            {loading ? <CircularProgress color="inherit" className="mx-auto d-block" />
+              :
               data.map((ele) => {
-                return <CoderContainer {...ele} />
+                return <CoderContainer key={ele.name} {...ele} />
               })
             }
           </TabPanel>
