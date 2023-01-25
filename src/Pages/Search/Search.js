@@ -11,7 +11,6 @@ import CoderContainer from "../../Components/CoderContainer/CoderContainer";
 import Filter from "../../Components/Filter/Filter";
 import './Search.css'
 import { Helmet } from 'react-helmet';
-
 import axios from "axios";
 import { CircularProgress } from "@mui/material";
 

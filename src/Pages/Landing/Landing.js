@@ -5,6 +5,8 @@ import CodeIcon from '@mui/icons-material/Code';
 import TerminalIcon from '@mui/icons-material/Terminal';
 import GroupIcon from '@mui/icons-material/Group';
 import { Helmet } from 'react-helmet';
+import { Link } from "react-router-dom";
+
 const Landing = () => {
   
   const elements = [
@@ -33,8 +35,10 @@ const Landing = () => {
       }
     },
   ]
+  
   return (
-    <><Helmet>
+    <>
+    <Helmet>
     <title>CodeGram | Home</title>
   </Helmet>
     <div className={`${styles.main_div} mt-5`}>
@@ -42,9 +46,9 @@ const Landing = () => {
         <h1 className={`text-center ${styles.heading_primary}`}>Welcome to CodeGram</h1>
         <p className={`text-center ${styles.para_primary} mt-3`}>Lorem ipsum dolor sit,Lorem ipsum dolor sit amet consectetur adipisicing elit. Est voluptate neque in veritatis quas! amet consectetur adipisicing elit. Atque architecto illum rem maxime omnis?</p>
         <p className={`text-center ${styles.para_primary} mt-5`}>Lorem ipsum dolor sit, elit.</p>
-        <button className={` btn_prim mx-auto d-block ${styles.btn_prim}`}>
+        <Link to="/Search" className="nav-link" href="#search"><button className={` btn_prim mx-auto d-block ${styles.btn_prim}`} >
           Explore
-        </button>
+        </button></Link>
       </div>
 
       <div className='d-flex justify-content-between align-items-center'>
