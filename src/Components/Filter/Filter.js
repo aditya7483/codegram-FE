@@ -20,9 +20,9 @@ function Filter(props) {
   };
 
   const handleSave = (e) => {
-    const { setDomain } = props
+    const { setFilterData } = props
     e.preventDefault();
-    setDomain([...data])
+    setFilterData([...data])
   }
 
 

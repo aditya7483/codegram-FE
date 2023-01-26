@@ -54,7 +54,7 @@ function Search() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [domain, setDomain] = useState([]);
+  const [filterData, setFilterData] = useState([]);
   axios.defaults.baseURL = 'https://codegram-be.vercel.app/api';
   axios.defaults.headers.post['Content-Type'] = 'application/json';
   const AUTH = window.localStorage.getItem('auth-token');
@@ -62,8 +62,7 @@ function Search() {
     axios.defaults.headers.common['auth-token'] = AUTH;
   }
 
-  const fetchData = async () => {
-    setData([])
+  const fetchProjectData = async () => {
     setLoading(true);
     try {
       let url = `project/filter`
@@ -73,7 +72,26 @@ function Search() {
       }
       console.log(url)
       const res = await axios.post(url, {
-        domain
+        domain: filterData
+      })
+      setData([...res.data])
+    } catch (error) {
+      window.alert(`An error occured`)
+      console.log(error)
+    }
+
+    setLoading(false)
+  }
+  const fetchUserData = async () => {
+    setLoading(true);
+    try {
+      let url = `user/filter`
+      const username = searchParams.get('username')
+      if (username) {
+        url += `?username=${username}`
+      }
+      const res = await axios.post(url, {
+        skill: filterData
       })
       setData([...res.data])
     } catch (error) {
@@ -85,25 +103,38 @@ function Search() {
   }
   useEffect(
     () => {
-      fetchData()
+      if (value === 0) {
+        fetchProjectData()
+      }
+      else {
+        fetchUserData()
+      }
     }
-    , [domain]
+    , [filterData]
   )
 
   const handleSearch = async (e) => {
     e.preventDefault()
-    searchParams.set('name', e.target[0].value)
+    console.log(value)
+    searchParams.set(`${value === 0 ? 'name' : 'username'}`, `${e.target[0].value}`)
     const url = new URL(window.location);
-    url.searchParams.set(`name`, `${e.target[0].value}`);
+    url.searchParams.set(`${value === 0 ? 'name' : 'username'}`, `${e.target[0].value}`);
     window.history.pushState({}, '', url)
-    fetchData()
+    if (value === 0) {
+      fetchProjectData()
+    }
+    else {
+      fetchUserData()
+    }
   }
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    setData([])
+    setFilterData([])
+    window.history.pushState({}, '', window.location.href.split('?')[0])
     if (selected === 'project') {
       setSelected('user');
-
     }
     else {
       setSelected('project');
@@ -122,13 +153,11 @@ function Search() {
             type="search"
             placeholder="Search"
             aria-label="Search"
-          // value={searchText}
-          // onChange={(e) => { setSearchText(e.target.value) }}
           />
           <IconButton type="button" sx={{ p: "10px" }} aria-label="search">
             <SearchIcon />
           </IconButton>
-          <Filter selected={selected} domain={domain} setDomain={setDomain} />
+          <Filter selected={selected} filterData={filterData} setFilterData={setFilterData} />
         </form>
       </div>
       <Box className={`${styles.sub_div} container d-flex flex-column flex-fill mt-3 `}>
