@@ -3,6 +3,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import ProjectContainer from '../../../Components/ProjectContainer/ProjectContainer';
 import styles from './MyProject.module.css'
+import DefaultMessage from '../../../Components/DefaultMessage/DefaultMessage';
 
 const MyProject = (props) => {
 
@@ -34,8 +35,12 @@ const MyProject = (props) => {
   return (
     <div className={`${styles.main_div} my-4 mx-5`}>
       <h1 className='text-center'>YOUR PROJECTS</h1>
-      {loading && <CircularProgress className="mx-auto d-block" color="inherit" />}
-      {data.map((ele) => {
+      {loading ? (
+              <CircularProgress color="inherit" className="mx-auto d-block" />
+            ) :data.length === 0 ? (
+              <div className="d-flex flex-column align-items-center my-4">
+              <DefaultMessage/></div>
+            ) :data.map((ele) => {
         return <ProjectContainer key={ele.pid} {...ele} />
       })}
     </div>

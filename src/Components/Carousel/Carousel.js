@@ -11,7 +11,7 @@ const Carousel = (props) => {
 
   timeoutFunc = setTimeout(() => {
     setCount((count + 1) % props.elements?.length)
-  }, 4000);
+  }, 5000);
 
   useEffect(() => {
     setCurrent(props.elements[count])
