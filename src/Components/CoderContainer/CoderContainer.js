@@ -7,11 +7,7 @@ import { Link } from "react-router-dom";
 function CoderContainer(props) {
   return (
     <>
-
-
-      <Card sx={{width: '75%', m: 2, height: 130, square: true }} >
-
-     
+      <Card sx={{ width: '100%', m: 2, height: 80, square: true }} className=" mx-auto">
 
         <CardContent className='d-flex flex-row p-0'>
           {/* <!-- remove border radius for square shaped pfp paddingB-24px --> */}

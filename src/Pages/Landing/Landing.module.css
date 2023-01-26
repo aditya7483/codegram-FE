@@ -15,7 +15,7 @@
 .para_primary {
   color: #6e6d6d;
   font-family: var(--font-logo);
-  font-weight: 600;
+  /* font-weight: 600; */
 }
 
 .lines {

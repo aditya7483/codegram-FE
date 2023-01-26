@@ -1,14 +1,13 @@
-
 :root {
   /* --color-primary: #8400fd; */
-  --color-primary:#2596be;
+  --color-primary: #2596be;
   /* --color-primary-light: #a440ff; */
-  --color-close:#FF7C7C;
-  --color-primary-light:#76d3d4;
+  --color-close: #ff7c7c;
+  --color-primary-light: #57d2d4;
   --color-link: #2853cb;
-  /* --font-primary: "Open Sans", sans-serif; */
-  --font-primary:'Nanum Gothic Coding', monospace;
-  --font-logo: 'Nanum Gothic Coding', monospace;
-  --font-color:#131a4c;
-  
+  --font-primary: "Open Sans", sans-serif;
+  /* --font-primary:'Nanum Gothic Coding', monospace; */
+  /* --font-logo: 'Nanum Gothic Coding', monospace; */
+  --font-logo: "Open Sans", sans-serif;
+  --font-color: #131a4c;
 }

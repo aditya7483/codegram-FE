@@ -8,10 +8,3 @@ export const isValidEmail = (email) => {
   }
   else return true
 }
-
-export const authenticateUser = (authToken) => {
-  axios.defaults.headers.common['auth-token'] = authToken;
-  axios.get(`https://codegram-be.vercel.app/api/auth/userInfo`)
-    .then((res) => { return res.data.username })
-    .catch((err) => { return { err: "Error in authenticating" } })
-}

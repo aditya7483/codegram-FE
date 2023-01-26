@@ -57,7 +57,7 @@ function Search() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [domain, setDomain] = useState([]);
-  
+
 
   const [filterData, setFilterData] = useState([]);
   axios.defaults.baseURL = 'https://codegram-be.vercel.app/api';
@@ -68,9 +68,6 @@ function Search() {
     axios.defaults.headers.common["auth-token"] = AUTH;
   }
 
-
-  const fetchData = async () => {
-    setData([]);
 
   const fetchProjectData = async () => {
 
@@ -117,6 +114,7 @@ function Search() {
   }
   useEffect(
     () => {
+      setData([])
       if (value === 0) {
         fetchProjectData()
       }
@@ -129,6 +127,7 @@ function Search() {
 
   const handleSearch = async (e) => {
     e.preventDefault()
+    setData([])
     console.log(value)
     searchParams.set(`${value === 0 ? 'name' : 'username'}`, `${e.target[0].value}`)
     const url = new URL(window.location);
@@ -144,16 +143,16 @@ function Search() {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
-    setData([])
     setFilterData([])
+    setData([])
     window.history.pushState({}, '', window.location.href.split('?')[0])
     if (selected === 'project') {
       setSelected('user');
     }
     else {
       setSelected('project');
-
     }
+
   };
 
   return (
@@ -189,36 +188,28 @@ function Search() {
               onChange={handleChange}
               aria-label="basic tabs example"
             >
-              <Tab sx={{ width: "425px" ,fontFamily:"var(--font-primary)" ,fontWeight:"600",fontSize:"20px"}} label="Project" {...a11yProps(0)} />
-              <Tab sx={{ width: "425px",fontFamily:"var(--font-primary)",fontWeight:"600",fontSize:"20px" }} label="Coders" {...a11yProps(1)} />
+              <Tab sx={{ width: "425px", fontFamily: "var(--font-primary)", fontWeight: "600", fontSize: "20px" }} label="Project" {...a11yProps(0)} />
+              <Tab sx={{ width: "425px", fontFamily: "var(--font-primary)", fontWeight: "600", fontSize: "20px" }} label="Coders" {...a11yProps(1)} />
             </Tabs>
           </Box>
           <TabPanel value={value} index={0}>
             {/* <!-- List of Project --> */}
-            {loading ? (
-              <CircularProgress color="inherit" className="mx-auto d-block" />
-            ) : data.length === 0 ? (
-              <div className="d-flex flex-column align-items-center my-4">
-                <h2 className="  text-center my-2 d-inline">data not found</h2>
-              </div>
-            ) : (
+            {loading && <CircularProgress color="inherit" className="mx-auto d-block" />}
+            {
               data.map((ele) => {
                 return <ProjectContainer key={ele.name} {...ele} />;
               })
-            )}
+            }
           </TabPanel>
           <TabPanel value={value} index={1}>
             {/* <!-- List of Coders --> */}
-            {loading ? (
+            {loading &&
               <CircularProgress color="inherit" className="mx-auto d-block" />
-            ) : data.length === 0 ? (
-              <div className="d-flex flex-column align-items-center my-4">
-              <DefaultMessage/></div>
-            ) : (
-              data.map((ele) => {
-                return <CoderContainer key={ele.name} {...ele} />;
-              })
-            )}
+            }
+            {data.map((ele) => {
+              return <CoderContainer key={ele.name} {...ele} />;
+            })
+            }
           </TabPanel>
         </Box>
       </Box>

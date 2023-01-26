@@ -3,7 +3,7 @@ import styles from "./NewProject.module.css";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import inputData from "../../../Common-Resources/inputData.json";
-
+import { useLocation } from "react-router-dom";
 import { Helmet } from 'react-helmet';
 
 import axios from 'axios'
@@ -11,7 +11,7 @@ import { useNavigate } from 'react-router-dom'
 import { Backdrop, CircularProgress } from "@mui/material";
 
 
-const NewProject = () => {
+const NewProject = (props) => {
   const [fields, setFields] = useState({
     name: '',
     description: '',
@@ -21,11 +21,12 @@ const NewProject = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [edit, setEdit] = useState(false);
+  const loc = useLocation()
   const nav = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(fields)
     setLoading(true)
     if (fields.domain.length === 0) {
       setError('All fields are required')
@@ -42,6 +43,32 @@ const NewProject = () => {
     }
     setLoading(false)
   };
+  const handleSave = async (e) => {
+    e.preventDefault();
+    setLoading(true)
+    if (fields.domain.length === 0) {
+      setError('All fields are required')
+    }
+    else {
+      try {
+        const res = await axios.post(`/project/edit/${loc.state.pid}`, {
+          ...fields
+        });
+        nav(-1)
+      } catch (error) {
+        setError((error.response.data.err || 'An error occurred'))
+      }
+    }
+    setLoading(false)
+  };
+
+  useEffect(() => {
+    const fields = loc?.state?.fields
+    if (fields) {
+      setFields({ ...fields })
+      setEdit(true)
+    }
+  }, []);
 
   return (
     <><Helmet>
@@ -68,11 +95,11 @@ const NewProject = () => {
           <TextField
             id="name"
             inputProps={{ maxLength: 20 }}
+            value={fields.name}
             margin="normal"
             required={true}
             className="my-4"
             label="Project Name"
-            value={fields.name}
             onChange={(e) => {
               setFields({
                 ...fields,
@@ -88,6 +115,7 @@ const NewProject = () => {
             id="combo-box-1"
             className="mb-4"
             options={inputData.projectDomains.data}
+            value={fields.domain}
             margin="normal"
             onChange={(e, val) => {
               setFields({
@@ -99,10 +127,29 @@ const NewProject = () => {
               <TextField {...params} margin="normal" label="Project Domain" />
             )}
           />
+          <Autocomplete
+            disableClearable
+            clearOnEscape
+            id="combo-box-1"
+            className="mb-4"
+            value={fields.status}
+            options={inputData.projectStatus.data}
+            margin="normal"
+            onChange={(e, val) => {
+              setFields({
+                ...fields,
+                status: val
+              })
+            }}
+            renderInput={(params) => (
+              <TextField {...params} margin="normal" label="Project Status" />
+            )}
+          />
           <TextField
             id="ref_link"
             required={true}
             inputProps={{ maxLength: 100 }}
+            value={fields.ref_link}
             className="mb-4"
             name="ref_link"
             onChange={(e) => {
@@ -118,6 +165,7 @@ const NewProject = () => {
           <TextField
             className="my-4"
             id="description"
+            value={fields.description}
             inputProps={{ maxLength: 250 }}
             label="Project Description"
             onChange={e => setFields({ ...fields, description: e.target.value })}
@@ -126,13 +174,21 @@ const NewProject = () => {
             multiline
             rows={4}
           />
-          <button
+          {edit ? <button
             type="submit"
-            onClick={handleSubmit}
+            onClick={handleSave}
             className={`${styles.submit_btn} btn_prim my-3`}
           >
-            Create
+            Save Changes
           </button>
+            :
+            <button
+              type="submit"
+              onClick={handleSubmit}
+              className={`${styles.submit_btn} btn_prim my-3`}
+            >
+              Create
+            </button>}
         </form>
       </div>
     </>

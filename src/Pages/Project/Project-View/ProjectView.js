@@ -1,15 +1,11 @@
 import { Helmet } from 'react-helmet';
-
-import Request from '../../../Components/Request/Request';
-
-
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import styles from "./ProjectView.module.css";
 import { useSearchParams } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
 
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import PropTypes from 'prop-types';
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -17,10 +13,10 @@ import Box from "@mui/material/Box";
 import CoderContainer from "../../../Components/CoderContainer/CoderContainer";
 import Request from './../../../Components/Request/Request'
 import DefaultMessage from '../../../Components/DefaultMessage/DefaultMessage';
+import { authenticateUser } from '../../../Common-Resources';
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
-import { authenticateUser } from '../../../Common-Resources';
 
 
   return (
@@ -60,14 +56,17 @@ function ProjectView(props) {
   });
   const [searchParams, setSearchParams] = useSearchParams();
   const [loading, setLoading] = useState(false);
+  const [edit, setEdit] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
+  const nav = useNavigate()
+
+
   axios.defaults.baseURL = 'https://codegram-be.vercel.app/api';
   axios.defaults.headers.post['Content-Type'] = 'application/json';
   const AUTH = window.localStorage.getItem('auth-token');
   if (AUTH && AUTH !== undefined && AUTH.length > 0) {
     axios.defaults.headers.common['auth-token'] = AUTH;
   }
-  const authUsername = authenticateUser(AUTH)
 
   const fetchData = async () => {
     setLoading(true)
@@ -76,9 +75,10 @@ function ProjectView(props) {
       if (res.data[0]) {
         setData({ ...res.data[0] })
       }
-      if (authUsername === res.data[0].owner_username) {
+      const authUsername = await axios.get(`auth/userInfo`)
+      if (authUsername.data.username === res.data[0].owner_username) {
         setIsAdmin(true)
-        const requests = await axios.post(`project/requests/${searchParams.get('pid')}`)
+        const requests = await axios.get(`project/requests/${searchParams.get('pid')}`)
         setMembers([...requests.data])
       }
     } catch (error) {
@@ -105,6 +105,15 @@ function ProjectView(props) {
       }
     }
   }
+  const handleDelete = async () => {
+    try {
+      setLoading(true)
+      const res = await axios.delete(`project/delete/${searchParams.get('pid')}`)
+      nav("/project/myProjects")
+    } catch (error) {
+      window.alert(`An error occured`)
+    }
+  }
 
 
   useEffect(() => {
@@ -117,9 +126,9 @@ function ProjectView(props) {
     }
 
   }, []);
-  const navigate = useNavigate();
+
   const handleEdit = () => {
-    navigate("/Project/new");
+    setEdit(true)
   }
   return (
 
@@ -127,59 +136,73 @@ function ProjectView(props) {
       <Helmet>
         <title>CodeGram | Project</title>
       </Helmet>
-      {!loading && <>  
-      <div
-        className={`${styles.main_div} d-flex flex-column mx-4 my-4`}
-      >
+      {loading ? (
+        <CircularProgress color="inherit" className="mx-auto d-block" />
+      ) : <>
+        <div
+          className={`${styles.main_div} d-flex flex-column mx-4 my-4`}
+        >
 
-        <button className={`btn btn-${join.color} px-3 my-5 mx-auto d-block`} onClick={handleJoin}>{join.text}</button>
-        <div className={`${styles.main_div} d-flex flex-column align-items-center my-4 "border border-success`}>
-          <h1 className='text-center my-4'>{data.title}</h1>
-          {loading ? (
-          <CircularProgress color="inherit" className="mx-auto d-block" />
-        ) : data.length === 0 ? (
-          <div className="d-flex flex-column align-items-center my-4">
-            <DefaultMessage/>
-           </div>
-        ) :
-            Object.keys(data).map((ele) => {
-              return <div className='my-3' key={ele}>
-                <h5 className='text-center my-2 d-inline'>{ele.toUpperCase()} :{" "}</h5>
-                <span className={`${styles.content} `}>{data[ele]}</span>
-              </div>
-            })
-          }
+          {!isAdmin && <button className={`btn btn-${join.color} px-3 my-5 mx-auto d-block`} onClick={handleJoin}>{join.text}</button>}
+          <div className={`${styles.main_div} d-flex flex-column align-items-center my-4 "border border-success`}>
+            <h1 className='text-center my-4'>{data.title}</h1>
+            {
+              Object.keys(data).map((ele) => {
+                return <div className='my-3' key={ele}>
+                  <h5 className='text-center my-2 d-inline'>{ele.toUpperCase()} :{" "}</h5>
+                  <span className={`${styles.content} `}>{data[ele]}</span>
+                </div>
+              })
+            }
+          </div>
         </div>
-      </div>
-      <div className='container my-4'>
-        Team members:
-        {members.map((ele) => {
-          return <Request {...ele} />
-        })
-        }
-        <div div className="d-flex flex-row m-auto flex-fill">
-        <button type="button" className={`${styles.submit_btn} btn_prim my-3 mx-2`} onClick={handleEdit}>Edit</button>
-        <button type="button" className={`${styles.submit_btn} btn_prim my-3 mx-2`} >Delete</button></div>
-    </div>
-      <div className={`${styles.main_div} d-flex flex-column mx-4 my-4`}>
-        <Box className={`${styles.display_div}`}>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
-          <Tab  sx={{ width: "425px" }} label="Users" {...a11yProps(0)} />
-          <Tab  sx={{ width: "425px" }} label="Request" {...a11yProps(1)} />
-        </Tabs>
-      </Box>
-      <TabPanel value={value} index={0}>
-      <CoderContainer/>
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-        <Request/>
-      </TabPanel>
-      </Box></div>
+        <div className='container my-4'>
+
+          {isAdmin && <div div className="d-flex flex-row m-auto flex-fill">
+
+            <button type="button" className={`btn_prim my-3 mx-2`} onClick={handleEdit}>
+              Edit
+            </button>
+            {edit && <Navigate to={'/Project/new'} state={{
+              fields: {
+                name: data.name,
+                status: data.status,
+                description: data.description,
+                domain: data.domain,
+                ref_link: DataTransfer.ref_link
+              },
+              pid: data.pid
+            }}
+              replace={true}
+            />}
+            <button type="button" className={`my-3 mx-2 btn btn-outline-danger`} onClick={handleDelete}>Delete</button>
+          </div>}
+
+        </div>
+        <div className={`${styles.main_div} d-flex flex-column mx-4 my-4`}>
+          Team members:
+
+          <Box className={`${styles.display_div}`}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
+                <Tab sx={{ width: "425px" }} label="Users" {...a11yProps(0)} />
+                <Tab sx={{ width: "425px" }} label="Request" {...a11yProps(1)} />
+              </Tabs>
+            </Box>
+            <TabPanel value={value} index={0}>
+              <CoderContainer />
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+              {members.map((ele) => {
+                return <Request {...ele} />
+              })
+              }
+            </TabPanel>
+          </Box></div>
       </>}
-      </>
-    
-      
+    </>
+
+
   );
 }
 

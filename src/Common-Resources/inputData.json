@@ -26,5 +26,8 @@
       "MATLAB",
       "Tensor Flow"
   ]
+  },
+  "projectStatus":{
+    "data":["Open","Closed","Ongoing","Finished"]
   }
 }
