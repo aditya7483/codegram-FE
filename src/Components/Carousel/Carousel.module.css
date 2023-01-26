@@ -4,7 +4,7 @@
 
 .icon_div {
   margin-bottom: 1rem;
-  background: #ff6a00;
+  background:var(--color-primary-light);
   border-radius: 50%;
   padding: 1rem;
   animation-duration: 0.5s;
@@ -47,8 +47,10 @@
 
 .heading {
   margin-bottom: 1rem;
+  font-family: var(--font-logo);
 }
 
 .para {
   color: #6e6d6d;
+  font-weight: 600;
 }

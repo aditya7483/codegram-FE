@@ -1,6 +1,5 @@
-
-
 import { Helmet } from 'react-helmet';
+
 import Request from '../../../Components/Request/Request';
 
 
@@ -9,11 +8,50 @@ import React, { useState, useEffect } from 'react';
 import styles from "./ProjectView.module.css";
 import { useSearchParams } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
+
+import { useNavigate } from "react-router-dom";
+import PropTypes from 'prop-types';
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
+import CoderContainer from "../../../Components/CoderContainer/CoderContainer";
+import Request from './../../../Components/Request/Request'
+import DefaultMessage from '../../../Components/DefaultMessage/DefaultMessage';
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
 import { authenticateUser } from '../../../Common-Resources';
 
 
-function ProjectView(props) {
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box component={'div'} sx={{ p: 3 }}>
+          <Box>{children}</Box>
+        </Box>
+      )}
+    </div>
+  );
+} TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
 
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
+function ProjectView(props) {
+  const [value, setValue] = React.useState(0);
   const [data, setData] = useState({});
   const [members, setMembers] = useState([]);
   const [join, setJoin] = useState({
@@ -49,6 +87,11 @@ function ProjectView(props) {
     setLoading(false)
   }
 
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+
   const handleJoin = async () => {
     if (join.text === 'Join') {
       setJoin({
@@ -63,6 +106,7 @@ function ProjectView(props) {
     }
   }
 
+
   useEffect(() => {
 
     if (props.data) {
@@ -73,21 +117,31 @@ function ProjectView(props) {
     }
 
   }, []);
-
+  const navigate = useNavigate();
+  const handleEdit = () => {
+    navigate("/Project/new");
+  }
   return (
+
     <>
       <Helmet>
         <title>CodeGram | Project</title>
       </Helmet>
-
+      {!loading && <>  
       <div
-        className={`${styles.main_div} d-flex flex-column align-items-center my-4`}
+        className={`${styles.main_div} d-flex flex-column mx-4 my-4`}
       >
+
         <button className={`btn btn-${join.color} px-3 my-5 mx-auto d-block`} onClick={handleJoin}>{join.text}</button>
         <div className={`${styles.main_div} d-flex flex-column align-items-center my-4 "border border-success`}>
           <h1 className='text-center my-4'>{data.title}</h1>
-          {loading && <CircularProgress className="mx-auto d-block" color="inherit" />}
-          {
+          {loading ? (
+          <CircularProgress color="inherit" className="mx-auto d-block" />
+        ) : data.length === 0 ? (
+          <div className="d-flex flex-column align-items-center my-4">
+            <DefaultMessage/>
+           </div>
+        ) :
             Object.keys(data).map((ele) => {
               return <div className='my-3' key={ele}>
                 <h5 className='text-center my-2 d-inline'>{ele.toUpperCase()} :{" "}</h5>
@@ -103,8 +157,29 @@ function ProjectView(props) {
           return <Request {...ele} />
         })
         }
-      </div>
-    </>
+        <div div className="d-flex flex-row m-auto flex-fill">
+        <button type="button" className={`${styles.submit_btn} btn_prim my-3 mx-2`} onClick={handleEdit}>Edit</button>
+        <button type="button" className={`${styles.submit_btn} btn_prim my-3 mx-2`} >Delete</button></div>
+    </div>
+      <div className={`${styles.main_div} d-flex flex-column mx-4 my-4`}>
+        <Box className={`${styles.display_div}`}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
+          <Tab  sx={{ width: "425px" }} label="Users" {...a11yProps(0)} />
+          <Tab  sx={{ width: "425px" }} label="Request" {...a11yProps(1)} />
+        </Tabs>
+      </Box>
+      <TabPanel value={value} index={0}>
+      <CoderContainer/>
+      </TabPanel>
+      <TabPanel value={value} index={1}>
+        <Request/>
+      </TabPanel>
+      </Box></div>
+      </>}
+      </>
+    
+      
   );
 }
 

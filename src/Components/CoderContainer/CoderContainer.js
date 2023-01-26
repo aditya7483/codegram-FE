@@ -8,7 +8,11 @@ function CoderContainer(props) {
   return (
     <>
 
-      <Card sx={{ Width: 40, m: 2, height: 80, square: true }} >
+
+      <Card sx={{width: '75%', m: 2, height: 130, square: true }} >
+
+     
+
         <CardContent className='d-flex flex-row p-0'>
           {/* <!-- remove border radius for square shaped pfp paddingB-24px --> */}
 

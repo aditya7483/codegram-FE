@@ -6,7 +6,7 @@ import inputData from "../../Common-Resources/inputData.json"
 import { isValidEmail } from '../../Common-Resources';
 import axios from 'axios'
 import { Backdrop, CircularProgress } from '@mui/material';
-
+import Loading from '../../Assets/loading-logo.gif'
 const Login = () => {
 
   const [loading, setLoading] = useState(false);
@@ -84,10 +84,11 @@ const Login = () => {
     <div>
 
       <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        sx={{ color: '#040815', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={loading}
       >
-        <CircularProgress color="inherit" />
+        {/* <CircularProgress color="inherit" /> */}
+        <img src={Loading} alt="" />
       </Backdrop>
       {/* <!-- Modal --> */}
       <div className="modal fade" id="LoginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">

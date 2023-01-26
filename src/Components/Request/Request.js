@@ -3,7 +3,12 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
+
+import styles from './Request.module.css';
+import Box from "@mui/material/Box";
+
 import axios from 'axios';
+
 
 function Request(props) {
 
@@ -26,7 +31,12 @@ function Request(props) {
   }
   return (
     <div>
-      <Card sx={{ Width: 6, m: 2, height: 70, square: true }}>
+
+      <Card sx={{ width: '75%', m: 2,  height:100, square: true }} >
+      
+      
+        
+
         <CardContent className="d-flex flex-row justify-content-between">
           <Typography component={'div'}
             sx={{ fontSize: 18 }}
@@ -38,6 +48,7 @@ function Request(props) {
           {!props.accepted && <div>
             <button type="button" className={`btn btn-${color}`} onClick={handleclick}>accept</button>
           </div>}
+
         </CardContent>
       </Card>
 

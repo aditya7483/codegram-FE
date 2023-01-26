@@ -119,7 +119,7 @@ const ProfileView = (props) => {
           </Box>
         </Box>
       <div className={` container mt-3`}>          
-        <Box sx={{ width: '80%' }}>
+        <Box sx={{ width: '75%' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example" centered>
           <Tab label="Overview" {...a11yProps(0)} />

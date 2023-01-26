@@ -3,7 +3,7 @@
 }
 
 .header_div {
-  max-width: 39rem;
+  max-width: 50rem;
 }
 
 .btn_prim {
@@ -14,6 +14,8 @@
 }
 .para_primary {
   color: #6e6d6d;
+  font-family: var(--font-logo);
+  font-weight: 600;
 }
 
 .lines {

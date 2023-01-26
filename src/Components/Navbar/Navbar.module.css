@@ -4,8 +4,11 @@
 }
 
 .logo {
-  font-size: 20px;
-  color: #740dfb;
+  font-size: 33px;
+  letter-spacing: 2px;
+  font-weight: bold;
+  color: var(--font-color);
+  font-family: var(--font-logo);
 }
 
 .btn_prim {
