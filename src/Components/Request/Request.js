@@ -31,12 +31,7 @@ function Request(props) {
   }
   return (
     <div>
-
-      <Card sx={{ width: '75%', m: 2,  height:100, square: true }} >
-      
-      
-        
-
+      <Card sx={{ width: '75%', m: 2, height: 100, square: true }} >
         <CardContent className="d-flex flex-row justify-content-between">
           <Typography component={'div'}
             sx={{ fontSize: 18 }}

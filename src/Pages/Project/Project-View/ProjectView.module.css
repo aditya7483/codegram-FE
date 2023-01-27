@@ -1,6 +1,6 @@
 .main_div {
-  border: 1px solid #d3d3d3;
-  border-radius: 6px;
+  /* border: 1px solid #d3d3d3;
+  border-radius: 6px; */
 }
 .content {
   border: 1px solid #d3d3d3;
@@ -12,6 +12,7 @@
 }
 .display_div {
   width: 60%;
+  margin: auto;
 }
 .submit_btn {
   padding: 8px 10px;
