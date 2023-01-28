@@ -1,6 +1,8 @@
 .main_div {
-  /* border: 1px solid #d3d3d3;
-  border-radius: 6px; */
+  margin: auto;
+}
+.profile_div {
+  width: 22%;
 }
 .content {
   border: 1px solid #d3d3d3;
@@ -17,4 +19,18 @@
 .submit_btn {
   padding: 8px 10px;
   width: 15rem;
+}
+.username {
+  text-align: center;
+  font-size: 1.2rem !important;
+}
+.user_profile_pic {
+  height: 10rem;
+  width: 10rem;
+  border-radius: 75px;
+  cursor: pointer;
+}
+.details_container {
+  width: 80%;
+  padding: 1rem 2rem;
 }

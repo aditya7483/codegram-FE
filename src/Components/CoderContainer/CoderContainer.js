@@ -51,7 +51,8 @@ function CoderContainer(props) {
             className={`${styles.user_profile_pic} mt-2 `}
             style={{
               backgroundImage: `url("https://api.dicebear.com/5.x/pixel-art/svg?seed=${props.username}")`,
-              backgroundRepeat: `no-repeat`
+              backgroundRepeat: `no-repeat`,
+              border: `1px solid #ccdbe3`
             }}
           ></div>
           <div className='align-self-center d-flex justify-content-between' style={{ width: '100%' }}>

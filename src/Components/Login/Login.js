@@ -66,6 +66,9 @@ const Login = () => {
     else if (fields.username.length < 5 || fields.password.length < 5) {
       setError('The username and password must contain atleast 5 characters')
     }
+    else if (fields.skills.length === 0) {
+      setError('All fields are required')
+    }
     else {
       try {
         const res = await axios.post('/auth/signup', {

@@ -3,7 +3,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import styles from "./ProjectView.module.css";
 import { useSearchParams } from 'react-router-dom';
-import { CircularProgress } from '@mui/material';
+import { Backdrop, CircularProgress, Typography } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { Navigate, useNavigate } from "react-router-dom";
 import PropTypes from 'prop-types';
@@ -11,9 +11,8 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import CoderContainer from "../../../Components/CoderContainer/CoderContainer";
-import Request from './../../../Components/Request/Request'
-import DefaultMessage from '../../../Components/DefaultMessage/DefaultMessage';
-import { authenticateUser } from '../../../Common-Resources';
+import Loading from '../../../Assets/loading-logo.gif'
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -179,67 +178,92 @@ function ProjectView(props) {
       <Helmet>
         <title>CodeGram | Project</title>
       </Helmet>
-      {loading ? (
-        <CircularProgress color="inherit" className="mx-auto d-block" />
-      ) : <>
+      <Backdrop
+        sx={{ color: '#040815', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={loading}
+      >
+        {/* <CircularProgress color="inherit" /> */}
+        <img src={Loading} alt="" />
+      </Backdrop>
+      <>
         <div
-          className={`${styles.main_div} d-flex flex-column mx-4 my-4`}
+          className={`${styles.main_div} d-flex flex-row justify-content-between`}
         >
 
-          <div className={`${styles.main_div} d-flex flex-column align-items-center my-4 "border border-success`}>
-            <h1 className='text-center my-4'>{data.title}</h1>
+          <div className={`${styles.profile_div}`}>
+            <div className={`${styles.main_div} d-flex flex-column align-items-center my-4 "border border-success`}>
+              <div
+                className={`${styles.user_profile_pic} mt-2 mb-4 `}
+                style={{
+                  backgroundImage: `url("https://api.dicebear.com/5.x/identicon/svg?seed=${data.pid}")`,
+                  backgroundRepeat: "no-repeat",
+                  border: `1px solid #ccdbe3`
+                }}
+              ></div>
+              <Box className={styles.view_userinfo}>
+                <Typography color="#8400fd" className={`${styles.username}`}>
+                  #{data.pid}
+                </Typography>
+                <Typography color="#8400fd" className={styles.username}>
+                  {data.name}
+                </Typography>
+              </Box>
+            </div>
+            {isAdmin ? <div div className="d-flex flex-row m-auto flex-fill justify-content-center">
+
+              <button type="button" className={`btn_prim my-3 mx-3 px-4`} onClick={handleEdit}>
+                Edit
+              </button>
+              {edit && <Navigate to={'/Project/new'} state={{
+                fields: {
+                  name: data.name,
+                  status: data.status,
+                  description: data.description,
+                  domain: data.domain,
+                  ref_link: DataTransfer.ref_link
+                },
+                pid: data.pid
+              }}
+                replace={true}
+              />}
+              <LoadingButton
+                size="small"
+                color="error"
+                variant="outlined"
+                onClick={handleDelete}
+                loading={buttonLoading.delete}
+                loadingPosition="center"
+                className='my-auto'
+              >
+                <span>Delete</span>
+              </LoadingButton>
+            </div> :
+              !works_on && <LoadingButton
+                size="medium"
+                color={`${join.color}`}
+                onClick={handleJoin}
+                loading={buttonLoading.join}
+                loadingPosition="center"
+                variant="outlined"
+                className={`mx-auto d-block`}
+              >
+                <span>{join.text}</span>
+              </LoadingButton>
+            }
+          </div>
+          <div className={`${styles.details_container}`}>
             {
               Object.keys(data).map((ele) => {
-                return <div className='my-3' key={ele}>
-                  <h5 className='text-center my-2 d-inline'>{ele.toUpperCase()} :{" "}</h5>
-                  <span className={`${styles.content} `}>{data[ele]}</span>
-                </div>
+                if (ele !== 'pid' && ele !== 'name' && data[ele] !== '') {
+                  console.log(ele !== 'pid')
+                  return <div className='my-5' key={ele}>
+                    <h5 className='text-center my-2 d-inline'>{ele.toUpperCase()} :{" "}</h5>
+                    <span className={`${styles.content} `}>{data[ele]}</span>
+                  </div>
+                }
               })
             }
           </div>
-        </div>
-        <div className='container my-4'>
-
-          {isAdmin ? <div div className="d-flex flex-row m-auto flex-fill">
-
-            <button type="button" className={`btn_prim my-3 mx-3 px-4`} onClick={handleEdit}>
-              Edit
-            </button>
-            {edit && <Navigate to={'/Project/new'} state={{
-              fields: {
-                name: data.name,
-                status: data.status,
-                description: data.description,
-                domain: data.domain,
-                ref_link: DataTransfer.ref_link
-              },
-              pid: data.pid
-            }}
-              replace={true}
-            />}
-            <LoadingButton
-              size="small"
-              color="error"
-              variant="outlined"
-              onClick={handleDelete}
-              loading={buttonLoading.delete}
-              loadingPosition="center"
-              className='my-auto'
-            >
-              <span>Delete</span>
-            </LoadingButton>
-          </div> :
-            !works_on && <LoadingButton
-              size="medium"
-              color={`${join.color}`}
-              onClick={handleJoin}
-              loading={buttonLoading.join}
-              loadingPosition="center"
-              variant="contained"
-            >
-              <span>{join.text}</span>
-            </LoadingButton>
-          }
         </div>
 
         <div className={`${styles.main_div} d-flex flex-column mx-4 my-4`}>
@@ -263,7 +287,7 @@ function ProjectView(props) {
               }
             </TabPanel>}
           </Box></div>
-      </>}
+      </>
     </>
 
 
