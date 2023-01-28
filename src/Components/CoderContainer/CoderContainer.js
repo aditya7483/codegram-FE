@@ -27,6 +27,7 @@ function CoderContainer(props) {
       axios.put(`/project/acceptRequest/${searchParams.get('pid')}/${props.username}`)
     } catch (error) {
       window.alert(`An error occured`)
+      console.log(error)
     }
     fetchData instanceof Function && fetchData()
   }
@@ -36,6 +37,7 @@ function CoderContainer(props) {
       axios.delete(`/project/rejectRequest/${searchParams.get('pid')}/${props.username}`)
     } catch (error) {
       window.alert(`An error occured`)
+      console.log(error)
     }
     fetchData instanceof Function && fetchData()
   }

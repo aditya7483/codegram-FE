@@ -61,8 +61,10 @@ function ProjectView(props) {
   const [edit, setEdit] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [works_on, setWorks_on] = useState(false);
+  const [userInfo, setUserInfo] = useState({
+    authUsername: ''
+  });
   const nav = useNavigate()
-  let authUsername = null;
 
   axios.defaults.baseURL = 'https://codegram-be.vercel.app/api';
   axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -71,45 +73,49 @@ function ProjectView(props) {
     axios.defaults.headers.common['auth-token'] = AUTH;
   }
 
-  const fetchAdditionalData = async () => {
+  const fetchAdditionalData = async (authUsername) => {
     try {
       const mems = await axios.get(`project/members/${searchParams.get('pid')}`)
       setMembers([...mems.data])
       const requests = await axios.get(`project/requests/${searchParams.get('pid')}`)
       setRequests([...requests.data])
-      if (requests.data.some((e) => e.username === authUsername.data.username)) {
+      if (requests.data.some((e) => e.username === (userInfo.authUsername.length === 0 ? authUsername : userInfo.authUsername))) {
         setJoin({
           text: 'Requested',
           color: 'secondary'
         })
       }
-      if (mems.data.some((e) => e.username === authUsername.data.username)) {
+      if (mems.data.some((e) => e.username === (userInfo.authUsername.length === 0 ? authUsername : userInfo.authUsername))) {
         setWorks_on(true)
       }
     } catch (error) {
       window.alert(`An error occured`)
-      // console.log(error)
+      console.log(error)
     }
   }
 
   const fetchData = async () => {
     setLoading(true)
     try {
+      const authUsername = (await (axios.get(`auth/userInfo`))).data.username
+      setUserInfo({
+        ...userInfo,
+        authUsername
+      })
       const res = await axios.post(`project/filter?pid=${searchParams.get('pid')}`)
       if (res.data[0]) {
         setData({ ...res.data[0] })
       }
-      authUsername = await axios.get(`auth/userInfo`)
-      fetchAdditionalData(authUsername)
 
-      if (authUsername.data.username === res.data[0].owner_username) {
+      fetchAdditionalData(authUsername)
+      if (authUsername === res.data[0].owner_username) {
         setIsAdmin(true)
         setWorks_on(true)
       }
 
     } catch (error) {
       window.alert(`An error occured`)
-      // console.log(error)
+      console.log(error)
     }
     setLoading(false)
   }
@@ -180,10 +186,11 @@ function ProjectView(props) {
       </Helmet>
       <Backdrop
         sx={{ color: '#040815', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        // open={true}
         open={loading}
       >
         {/* <CircularProgress color="inherit" /> */}
-        <img src={Loading} alt="" />
+        <img src={Loading} alt="" className={styles.loading} />
       </Backdrop>
       <>
         <div
@@ -254,8 +261,7 @@ function ProjectView(props) {
           <div className={`${styles.details_container}`}>
             {
               Object.keys(data).map((ele) => {
-                if (ele !== 'pid' && ele !== 'name' && data[ele] !== '') {
-                  console.log(ele !== 'pid')
+                if (ele !== 'pid' && ele !== 'name' && data[ele]?.length > 0) {
                   return <div className='my-5' key={ele}>
                     <h5 className='text-center my-2 d-inline'>{ele.toUpperCase()} :{" "}</h5>
                     <span className={`${styles.content} `}>{data[ele]}</span>
@@ -282,7 +288,7 @@ function ProjectView(props) {
             </TabPanel>
             {isAdmin && <TabPanel value={value} index={1}>
               {requests.map((ele) => {
-                return <CoderContainer request={true} {...ele} fetchData={fetchAdditionalData} />
+                return <CoderContainer request={true} {...ele} fetchData={fetchData} />
               })
               }
             </TabPanel>}
