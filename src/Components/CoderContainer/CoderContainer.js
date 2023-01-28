@@ -3,7 +3,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import styles from './CoderContainer.module.css';
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, Navigate, useSearchParams } from "react-router-dom";
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useState } from 'react';
 import axios from 'axios';
@@ -11,6 +11,7 @@ import ClearIcon from '@mui/icons-material/Clear';
 
 function CoderContainer(props) {
   const [loading, setLoading] = useState(false);
+  const [nav, setNav] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   axios.defaults.baseURL = 'https://codegram-be.vercel.app/api';
   axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -59,9 +60,14 @@ function CoderContainer(props) {
               color="#8400fd"
               gutterBottom
             >
-              <Link to="/profile" style={{ textDecoration: 'none' }}> {props.username}</Link>
+              <span style={{ textDecoration: 'none', cursor: 'pointer' }} onClick={() => { setNav(true) }}> {props.username}</span>
+              {nav && <Navigate to={'/profile'} state={{
+                ...props
+              }}
+              />
+              }
             </Typography>
-            {!props.accepted && <div>
+            {props.request && <div>
               <LoadingButton variant="outlined" loadingPosition="center" color="success" loading={loading} onClick={handleAccept}>
                 Accept
               </LoadingButton>

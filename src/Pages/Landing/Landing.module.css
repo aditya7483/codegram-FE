@@ -8,6 +8,9 @@
 
 .btn_prim {
   padding: 7px 20px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  border-width: 2px;
 }
 
 .heading_primary {

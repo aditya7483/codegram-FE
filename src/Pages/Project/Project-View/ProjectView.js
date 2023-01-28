@@ -104,7 +104,6 @@ function ProjectView(props) {
       fetchAdditionalData(authUsername)
 
       if (authUsername.data.username === res.data[0].owner_username) {
-        console.log(authUsername.data.username === res.data[0].owner_username);
         setIsAdmin(true)
         setWorks_on(true)
       }

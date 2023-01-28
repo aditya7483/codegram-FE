@@ -28,7 +28,7 @@ const Landing = () => {
     {
       Icon: CreateNewFolderIcon,
       heading: "CREATE",
-      para: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem neque reprehenderit ratione velit expedita!",
+      para: "Create scalable projects with real time status tracking",
       iconProps: {
         sx: { fontSize: 40, color: "white" },
       },

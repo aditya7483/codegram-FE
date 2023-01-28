@@ -16,6 +16,9 @@
   align-items: center;
   margin-right: 30px;
 }
+.username {
+  font-size: 1.2rem !important;
+}
 .user_profile_pic {
   height: 30.3rem;
   width: 10rem;
@@ -41,10 +44,10 @@
 .submit_btn {
   padding: 8px 10px;
 }
-.skills{
+.skills {
   height: 100%;
   width: 200px;
 }
-.followbox{
+.followbox {
   cursor: pointer;
 }
