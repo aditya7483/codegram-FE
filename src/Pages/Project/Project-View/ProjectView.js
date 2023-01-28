@@ -97,20 +97,25 @@ function ProjectView(props) {
   const fetchData = async () => {
     setLoading(true)
     try {
-      const authUsername = (await (axios.get(`auth/userInfo`))).data.username
-      setUserInfo({
-        ...userInfo,
-        authUsername
-      })
       const res = await axios.post(`project/filter?pid=${searchParams.get('pid')}`)
       if (res.data[0]) {
         setData({ ...res.data[0] })
       }
-
-      fetchAdditionalData(authUsername)
-      if (authUsername === res.data[0].owner_username) {
-        setIsAdmin(true)
-        setWorks_on(true)
+      if (AUTH) {
+        const authUsername = (await (axios.get(`auth/userInfo`))).data.username
+        setUserInfo({
+          ...userInfo,
+          authUsername
+        })
+        fetchAdditionalData(authUsername)
+        if (authUsername === res.data[0].owner_username) {
+          setIsAdmin(true)
+          setWorks_on(true)
+        }
+      }
+      else {
+        const mems = await axios.get(`project/members/${searchParams.get('pid')}`)
+        setMembers([...mems.data])
       }
 
     } catch (error) {
@@ -245,7 +250,7 @@ function ProjectView(props) {
                 <span>Delete</span>
               </LoadingButton>
             </div> :
-              !works_on && <LoadingButton
+              AUTH && !works_on && (data.status !== 'Finished' || data.status !== 'Closed') && <LoadingButton
                 size="medium"
                 color={`${join.color}`}
                 onClick={handleJoin}

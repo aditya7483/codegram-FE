@@ -53,6 +53,7 @@ const Login = () => {
         setError((error.response.data.err || 'An error occurred'))
       }
     }
+    setLoading(false)
   }
 
 
