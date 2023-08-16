@@ -8,6 +8,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { useState } from 'react';
 import axios from 'axios';
 import ClearIcon from '@mui/icons-material/Clear';
+import { Chip, Stack } from '@mui/material';
 
 function CoderContainer(props) {
   const [loading, setLoading] = useState(false);
@@ -64,6 +65,11 @@ function CoderContainer(props) {
               gutterBottom
             >
               <span style={{ textDecoration: 'none', cursor: 'pointer' }} onClick={() => { setNav(true) }}> {props.username}</span>
+              <Stack direction="row" className="flex-wrap" spacing={1}>
+            <Chip
+              sx={{ fontFamily: "var(--font-primary)", fontWeight: "600", backgroundColor: `#60d74b` }}
+              label={`Rating: ${props.rating}`}
+            /></Stack>
               {nav && <Navigate to={'/profile'} state={{
                 ...props
               }}

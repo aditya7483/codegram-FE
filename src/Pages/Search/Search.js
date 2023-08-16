@@ -207,6 +207,7 @@ function Search() {
               <CircularProgress color="inherit" className="mx-auto d-block" />
             }
             {data.map((ele) => {
+              console.log(ele)
               return <CoderContainer key={ele.name} {...ele} />;
             })
             }

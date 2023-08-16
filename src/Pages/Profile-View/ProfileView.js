@@ -47,42 +47,36 @@ function a11yProps(index) {
 }
 const ProfileView = (props) => {
   const [value, setValue] = React.useState(0);
+  const [following, setFollowing] = useState(0);
+  const [userData, setUserData] = useState({});
   const [count, setCount] = useState(0);
-  const [follow, setfollow] = useState(0);
   const [searchParams, setSearchParams] = useSearchParams();
-  const [data, setData] = useState([]);
-  const [skills, setSkills] = useState([]);
+  const [projectData, setProjectData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [buttonLoading, setButtonLoading] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [usersInfo, setUsersInfo] = useState({
-    authUsername: '',
-    username: ''
-  });
   const loc = useLocation()
   axios.defaults.baseURL = 'https://codegram-be.vercel.app/api';
   axios.defaults.headers.post['Content-Type'] = 'application/json';
   const AUTH = window.localStorage.getItem('auth-token');
-  if (AUTH && AUTH !== undefined && AUTH.length > 0) {
+  if (AUTH?.length) {
     axios.defaults.headers.common["auth-token"] = AUTH;
   }
 
   const handleFollow = async () => {
     setButtonLoading(true)
     try {
-      if (follow === 1) {
-        await axios.delete(`follow/unfollow/${usersInfo.username}`)
+      if (following === 1) {
+        await axios.delete(`follow/unfollow/${userData.username}`)
         setCount(count - 1);
-        setfollow(0);
+        setFollowing(0);
       }
       else {
-        console.log(usersInfo.authUsername)
-        console.log(usersInfo.username);
         const res = await axios.post(`follow/new`, {
-          username: usersInfo.username,
-          follower: usersInfo.authUsername
+          username: userData.username,
+          follower: userData.authUsername
         })
-        setfollow(1);
+        setFollowing(1);
         setCount(count + 1);
         console.log(res)
       }
@@ -101,25 +95,22 @@ const ProfileView = (props) => {
     setLoading(true);
     try {
       const uname = searchParams.get("username")
-      const authUser = (await axios.get(`auth/userInfo`)).data.username
-      if (authUser === uname) {
-        setIsAdmin(true)
+      let authUser;
+      if(AUTH?.length){
+        authUser = (await axios.get(`auth/userInfo`)).data.username
+        if (authUser === uname) {
+          setIsAdmin(true)
+        }
       }
-      const res = await axios.post(`project/filter?owner_username=${uname}`)
-      const sk = await axios.get(`user/skills/${uname}`)
-      const foll = await axios.get(`follow/find/${uname}`)
-      setSkills([...sk.data])
-      setData([...res.data])
-      setCount(foll.data.length)
-      if (foll.data.some((e) => e.follower === authUser)) {
-        setfollow(1)
-      }
-      else {
-        setfollow(0)
-      }
-      setUsersInfo({
-        ...usersInfo,
-        username: uname,
+      const projects = await axios.post(`project/filter?owner_username=${uname}`)
+      const udata = (await axios.get(`user/${uname}`)).data
+      console.log(udata);
+      
+      setProjectData([...projects.data])
+      setCount(udata.followers.length)
+      setFollowing(udata.followers?.some((e) => e.follower === authUser))
+      setUserData({
+        ...udata,
         authUsername: authUser
       })
     } catch (error) {
@@ -164,7 +155,10 @@ const ProfileView = (props) => {
           ></div>
           <Box className={styles.view_userinfo}>
             <Typography color="#8400fd" className={styles.username}>
-              @{loc.state?.username || usersInfo.username}
+              @{userData.username}
+            </Typography>
+            <Typography color="#1d810b" className={styles.username}>
+              Rating : {userData.rating} ({userData.reviews} reviews)
             </Typography>
           </Box>
           <Box>
@@ -175,7 +169,7 @@ const ProfileView = (props) => {
             >
               Set Profile
             </button> */}
-            {!isAdmin && <LoadingButton
+            {AUTH?.length && !isAdmin && <LoadingButton
               color="primary"
               variant="outlined"
               className={`my-3 mx-2`}
@@ -183,7 +177,7 @@ const ProfileView = (props) => {
               loading={buttonLoading}
               loadingPosition="center"
             >
-              {follow === 0 ? "Follow" : "Unfollow"}
+              {!following? "Follow" : "Unfollow"}
             </LoadingButton>}
           </Box>
           <Box className={`${styles.skills} container mt-3`}>
@@ -192,10 +186,10 @@ const ProfileView = (props) => {
                 {count} followers
               </div>
             </Box>
-            {skills.length > 0 &&
+            {userData.skills?.length > 0 &&
               <><Typography>Skills</Typography>
                 <Stack direction="row" className="flex-wrap" spacing={1}>
-                  {skills.map((ele) => {
+                  {userData.skills?.map((ele) => {
                     return <Chip
                       className="m-2"
                       label={ele.skill}
@@ -214,7 +208,7 @@ const ProfileView = (props) => {
               </Tabs>
             </Box>
             <TabPanel value={value} index={0}>
-              {data.map((ele) => {
+              {projectData.map((ele) => {
                 return <ProjectContainer {...ele} />
               })}
             </TabPanel>
